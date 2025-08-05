@@ -10,6 +10,9 @@ export default function AboutPage() {
       <p>
         Our goal is to build modern, scalable, and user-friendly applications using cutting-edge technologies.
       </p>
+      <p>
+        Our goal is to build modern, scalable, and user-friendly applications using cutting-edge technologies.
+      </p>
     </main>
   );
 }
