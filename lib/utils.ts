@@ -4,3 +4,14 @@ import { twMerge } from "tailwind-merge"
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
+
+// List of authorized admin email addresses
+const ADMIN_EMAILS = [
+  // Add your admin emails here
+  'smaleesha84@gmail.com',  // Replace with actual admin email
+]
+
+export function isAdmin(email: string | null | undefined) {
+  if (!email) return false
+  return ADMIN_EMAILS.includes(email.toLowerCase())
+}

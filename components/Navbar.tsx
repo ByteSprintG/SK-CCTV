@@ -1,27 +1,68 @@
+import { auth, signIn, signOut } from '@/auth'
 import Link from 'next/link'
-import React from 'react'
 import Image from 'next/image'
+import { isAdmin } from '@/lib/utils'
 
-const Navbar = () => {
+const Navbar = async () => {
+  const session = await auth()
+  const isUserAdmin = isAdmin(session?.user?.email)
+
   return (
-    <header className='justify-center shadow-sm'>
-          <div className='bg-blue-400 w-full justify-center text-center text-white p-1 text-sm'>
-            banner
-          </div>
-      <nav className='px-80 flex items-center justify-between'>
-        <Link className='p-3' href='/'>
-          <Image src="/logo.png" alt='logo' width={144} height={30}/>
+    <header className="justify-center shadow-sm">
+      <div className="bg-blue-400 w-full text-center text-white p-1 text-sm">
+        banner
+      </div>
+
+      <nav className="px-12 flex items-center justify-between">
+        <Link className="p-3" href="/">
+          <Image src="/logo.png" alt="logo" width={144} height={30} />
         </Link>
 
         <div>
-          <Link className='p-3' href='/products'>Products</Link>
-          <Link className='p-3' href='/about'>About</Link>
-          <Link className='p-3' href='/contact'>Contact</Link>  
+          <Link className="p-3" href="/products">Products</Link>
+          <Link className="p-3" href="/about">About</Link>
+          <Link className="p-3" href="/contact">Contact</Link>
+          <Link className="p-3" href="/cart">Cart</Link>
         </div>
 
-        <div>
-          <Link className='p-3' href='/cart'>Cart</Link>
-          <Link className='p-3' href='/login'>Login</Link>
+        <div className="flex items-center">
+
+          {session?.user ? (
+            <>
+              {isUserAdmin && (
+                <Link className="p-3" href="/admin">Admin Dashboard</Link>
+              )}
+
+              <form action={async () => { "use server"; await signOut(); }}>
+                <button type="submit" className="p-3">Logout</button>
+              </form>
+
+              <Link 
+                href={`/profile`} 
+                className="p-3 hover:text-blue-600 transition-colors flex items-center gap-2"
+              >
+                {session.user.image ? (
+                  <Image
+                    src={session.user.image}
+                    alt="Profile"
+                    width={32}
+                    height={32}
+                    className="rounded-full"
+                  />
+                ) : (
+                  <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white">
+                    {session.user.name?.[0] || '?'}
+                  </div>
+                )}
+              </Link>
+
+              
+            </>
+          ) : (
+            <form action={async () => { "use server"; await signIn('google'); }}>
+              <button type="submit" >Login</button>
+            </form>
+          )}
         </div>
       </nav>
     </header>
