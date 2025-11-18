@@ -11,7 +11,17 @@ const ADMIN_EMAILS = [
   'smaleesha84@gmail.com',  // Replace with actual admin email
 ]
 
+const TECHNICIAN_EMAILS = [
+  // Add your admin emails here
+  's19524@sci.pdn.ac.lk',  // Replace with actual admin email
+]
+
 export function isAdmin(email: string | null | undefined) {
   if (!email) return false
   return ADMIN_EMAILS.includes(email.toLowerCase())
+}
+
+export function isTechnician(email: string | null | undefined) {
+  if (!email) return false
+  return TECHNICIAN_EMAILS.includes(email.toLowerCase())
 }

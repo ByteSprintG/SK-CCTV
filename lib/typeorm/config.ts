@@ -1,0 +1,27 @@
+import { DataSource } from "typeorm";
+import { User} from "./entities/User";
+import { Product } from "./entities/Product";
+import {Cart} from "./entities/cart"
+import { Order } from "./entities/Order";
+
+export const AppDataSource = new DataSource({
+  type: "mongodb",
+  url: process.env.MONGODB_URI,
+  database: process.env.MONGODB_DB || "SKdb",
+  synchronize: process.env.NODE_ENV === "development", // Auto-create schema in dev
+  logging: process.env.NODE_ENV === "development",
+  entities: [User, Product, Cart, Order],
+//   useUnifiedTopology: true,
+});
+
+// Initialize connection
+let isInitialized = false;
+
+export const initializeDatabase = async () => {
+  if (!isInitialized && !AppDataSource.isInitialized) {
+    await AppDataSource.initialize();
+    isInitialized = true;
+    console.log("✅ Database connected successfully");
+  }
+  return AppDataSource;
+};
