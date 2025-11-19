@@ -120,3 +120,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities{
+  .card-grid{
+    @apply grid md:grid-cols-4 sm:grid-cols-2 gap-5 place-items-center
+  }
+}

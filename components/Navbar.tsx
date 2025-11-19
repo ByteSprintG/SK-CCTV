@@ -1,11 +1,12 @@
 import { auth, signIn, signOut } from '@/auth'
 import Link from 'next/link'
 import Image from 'next/image'
-import { isAdmin } from '@/lib/utils'
+import { isAdmin, isTechnician } from '@/lib/utils'
 
 const Navbar = async () => {
   const session = await auth()
   const isUserAdmin = isAdmin(session?.user?.email)
+  const isUserTechnician = isTechnician(session?.user?.email)
 
   return (
     <header className="justify-center shadow-sm">
@@ -19,10 +20,10 @@ const Navbar = async () => {
         </Link>
 
         <div>
-          <Link className="p-3" href="/products">Products</Link>
+          <Link className="p-3" href="/products">Shop All</Link>
           <Link className="p-3" href="/about">About</Link>
           <Link className="p-3" href="/contact">Contact</Link>
-          <Link className="p-3" href="/cart">Cart</Link>
+          <Link className="p-3" href="/shoppingcart">Cart</Link>
         </div>
 
         <div className="flex items-center">
@@ -31,6 +32,10 @@ const Navbar = async () => {
             <>
               {isUserAdmin && (
                 <Link className="p-3" href="/admin">Admin Dashboard</Link>
+              )}
+
+              {isUserTechnician && (
+                <Link className="p-3" href="/technician">Technician Dashboard</Link>
               )}
 
               <form action={async () => { "use server"; await signOut(); }}>
