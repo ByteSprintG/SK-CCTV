@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import { MapPin, Clock } from 'lucide-react';
+'use client'
 
-export default function ContactPage() {
+import React, { useState } from 'react';
+import { MapPin, Clock, ChevronDown, ChevronUp } from 'lucide-react';
+
+const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -10,6 +12,44 @@ export default function ContactPage() {
     orderNumber: '',
     comment: ''
   });
+
+  const [openFaq, setOpenFaq] = useState(null);
+
+  const faqs = [
+    {
+      id: 1,
+      question: "How To Order?",
+      answer: "You can place your order directly through our website by browsing our products, adding items to your cart, and proceeding to checkout. Alternatively, you can visit our showroom or contact us via phone or email to place an order with assistance from our team."
+    },
+    {
+      id: 2,
+      question: "How Long Does It Take For The Delivery And What Are The Charges?",
+      answer: [
+        "The Standard Delivery Time Of Orders In Colombo Is Within 2 Working Days. Island-wide Delivery Will Be Made Within 3-4 Working Days.",
+        "Delivery Charges Within Colombo Will Vary Based On Location Starting From LKR 299",
+        "Pick-up Of Orders Is Available Through Monday To Saturday From 10am To 7pm."
+      ]
+    },
+    {
+      id: 3,
+      question: "What Information Should Be Provided And How Secured Is The Website?",
+      answer: "When placing an order, you'll need to provide your name, contact information, delivery address, and payment details. Our website uses SSL encryption and secure payment gateways to protect your personal and financial information. We comply with industry-standard security practices to ensure your data is safe."
+    },
+    {
+      id: 4,
+      question: "What Is SimplyTek's Return And Refund Policy?",
+      answer: "We accept returns within 7 days of delivery for unopened products in original packaging. Defective items can be exchanged or refunded within the warranty period. Please contact our customer service team to initiate a return. Refunds are processed within 7-10 business days after we receive the returned item."
+    },
+    {
+      id: 5,
+      question: "What Is The Warranty Period For Electronics?",
+      answer: "Warranty periods vary by product and brand. Most electronics come with a manufacturer's warranty ranging from 6 months to 2 years. Specific warranty information is provided on each product page and with your purchase documentation. We also offer extended warranty options for select products."
+    }
+  ];
+
+  const toggleFaq = (id) => {
+    setOpenFaq(openFaq === id ? null : id);
+  };
 
   const handleChange = (e) => {
     setFormData({
@@ -57,14 +97,14 @@ export default function ContactPage() {
                 rel="noopener noreferrer"
                 className="text-blue-600 hover:underline font-semibold text-lg"
               >
-                SimplyTek - Thimbirigasyaya
+                SK-Electricals (Pvt) Ltd
               </a>
             </div>
 
             <div className="mb-8 text-gray-700 space-y-1">
-              <p>No.1,</p>
-              <p>Thimbirigasyaya Road,</p>
-              <p>Colombo 05, Western 00500, Sri Lanka</p>
+              <p>No.178,</p>
+              <p>Rajawewa,</p>
+              <p>Ampara , Eastern 32000, Sri Lanka</p>
             </div>
 
             <div className="border-t pt-6">
@@ -74,8 +114,16 @@ export default function ContactPage() {
               </h4>
               <div className="space-y-2 text-gray-700">
                 <p><span className="font-semibold">Weekdays:</span> 10 AM to 7 PM</p>
-                <p><span className="font-semibold">Friday:</span> 10 AM to 12 PM & 2 PM to 7 PM</p>
+                <p><span className="font-semibold">Friday:</span> 10 AM to 5 PM</p>
                 <p><span className="font-semibold">Saturday:</span> 10 AM to 6 PM</p>
+              </div>
+              <div className="border-t pt-6 mt-6">
+                <h4 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                  Call Us
+                </h4>
+                <div className="text-gray-700">
+                  <p><span className="font-semibold">Phone No :</span>+94 71 234 5678 | +94 77 123 4567</p>
+                </div>
               </div>
             </div>
           </div>
@@ -178,6 +226,127 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
+
+      {/* FAQ Section */}
+      <div className="max-w-7xl mx-auto px-4 py-16">
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-12">
+          Frequently Asked Questions
+        </h2>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          {/* Left Side - Empty space for layout */}
+          <div className="hidden md:block">
+            {/* Empty space to match the design */}
+          </div>
+
+          {/* Right Side - FAQ Items */}
+          <div className="space-y-4">
+            {faqs.map((faq) => (
+              <div key={faq.id} className="border-b border-gray-200">
+                <button
+                  onClick={() => toggleFaq(faq.id)}
+                  className="w-full py-6 flex items-center justify-between text-left hover:text-gray-600 transition-colors"
+                >
+                  <span className="text-lg font-medium text-gray-900 pr-4">
+                    {faq.question}
+                  </span>
+                  {openFaq === faq.id ? (
+                    <ChevronUp className="flex-shrink-0 w-5 h-5 text-gray-600" />
+                  ) : (
+                    <ChevronDown className="flex-shrink-0 w-5 h-5 text-gray-600" />
+                  )}
+                </button>
+                
+                {openFaq === faq.id && (
+                  <div className="pb-6 text-gray-700">
+                    {Array.isArray(faq.answer) ? (
+                      <ul className="space-y-3">
+                        {faq.answer.map((item, index) => (
+                          <li key={index} className="flex items-start">
+                            <span className="mr-2">•</span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p>{faq.answer}</p>
+                    )}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Explore More Section */}
+      <div className="bg-gray-50 py-16">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid md:grid-cols-3 gap-6">
+            {/* About Us Card */}
+            <div className="relative rounded-2xl overflow-hidden h-[400px] group cursor-pointer">
+              <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/60">
+                <img 
+                  src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=600&fit=crop" 
+                  alt="About Us" 
+                  className="w-full h-full object-cover mix-blend-overlay"
+                />
+              </div>
+              <div className="relative h-full flex flex-col items-center justify-center text-center px-8 z-10">
+                <h3 className="text-4xl font-bold text-white mb-4">About Us</h3>
+                <p className="text-white text-lg mb-8">
+                  Discover the our brand story behind
+                </p>
+                <button className="bg-white text-gray-900 px-10 py-3 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300">
+                  Explore
+                </button>
+              </div>
+            </div>
+
+            {/* FAQ Card */}
+            <div className="relative rounded-2xl overflow-hidden h-[400px] group cursor-pointer">
+              <div className="absolute inset-0 bg-gradient-to-b from-green-900/60 to-green-900/80">
+                <img 
+                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&h=600&fit=crop" 
+                  alt="FAQ" 
+                  className="w-full h-full object-cover mix-blend-overlay"
+                />
+              </div>
+              <div className="relative h-full flex flex-col items-center justify-center text-center px-8 z-10">
+                <h3 className="text-4xl font-bold text-white mb-4">F.A.Q</h3>
+                <p className="text-white text-lg mb-8">
+                  Find answers to all your questions
+                </p>
+                <button className="bg-white text-gray-900 px-10 py-3 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300">
+                  Explore
+                </button>
+              </div>
+            </div>
+
+            {/* Corporate Sales Card */}
+            <div className="relative rounded-2xl overflow-hidden h-[400px] group cursor-pointer">
+              <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/60">
+                <img 
+                  src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&h=600&fit=crop" 
+                  alt="Corporate Sales" 
+                  className="w-full h-full object-cover mix-blend-overlay"
+                />
+              </div>
+              <div className="relative h-full flex flex-col items-center justify-center text-center px-8 z-10">
+                <h3 className="text-4xl font-bold text-white mb-4">Corporate sales</h3>
+                <p className="text-white text-lg mb-8">
+                  Discover the Best Deals for Corporate Sales!
+                </p>
+                <button className="bg-white text-gray-900 px-10 py-3 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300">
+                  Explore
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
-}
+};
+
+export default Contact;
