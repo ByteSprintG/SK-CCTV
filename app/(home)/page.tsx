@@ -1,3 +1,4 @@
+import { Mail, Phone } from "lucide-react";
 import Image from "next/image";
 
 export default function Home() {
@@ -5,18 +6,96 @@ export default function Home() {
     <div>
       <div
         style={{
-          backgroundImage: "url('/HomePgImg.jpg')",
+          backgroundImage: "url('/hero2.png'),linear-gradient(to right, #0f172a, #1e3a8a, #0891b2)",
           backgroundSize: "cover",
           backgroundPosition: "center",
           width: "100%",
-          height: "600px",
+          height: "800px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           color: "white",
         }}
       >
-        <h1>Welcome to Our CCTV Store</h1>
+        <svg className="absolute inset-0 w-full h-full opacity-10" preserveAspectRatio="none">
+            <defs>
+              <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(100, 200, 255, 0.3)" strokeWidth="1"/>
+              </pattern>
+              <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="rgba(100, 200, 255, 0.5)" />
+                <stop offset="100%" stopColor="rgba(100, 200, 255, 0)" />
+              </linearGradient>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)" />
+            <line x1="0" y1="0" x2="100%" y2="100%" stroke="url(#lineGradient)" strokeWidth="2" />
+          </svg>
+
+          <div className="absolute top-30 left-300 w-24 h-24 border-2 border-cyan-500 opacity-20 animate-pulse"></div>
+          <div className="absolute top-3/4 right-20 w-24 h-24 border-2 border-blue-400 opacity-20"></div>
+          <div className="absolute bottom-40 left-350 w-40 h-40 border-2 border-cyan-600 opacity-10 animate-pulse"></div>
+          <div className="absolute top-32 left-100 w-60 h-60 border-2 border-cyan-600 opacity-10 animate-pulse"></div>
+
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 ml-18">
+          <div className="grid md:grid-cols-2 gap-12 items-center ">
+            <div className="space-y-8">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-400 border-opacity-10">
+                <span className="text-cyan-300 font-medium text-sm">Advanced Surveillance Tech</span>
+              </div>
+
+              <h1 className="text-5xl md:text-6xl font-bold text-white leading-tight">
+                Welcome to Our
+                <span className="bg-gradient-to-r from-cyan-400 to-blue-300 bg-clip-text text-transparent"> CCTV Store</span>
+              </h1>
+
+              <p className="text-lg text-cyan-100 leading-relaxed">
+                Professional CCTV installation and sales services. Protect what matters most with cutting-edge surveillance technology and expert installation.
+              </p>
+
+              <div className="flex flex-wrap gap-4 pt-4">
+                <a
+                  href="#contact"
+                  className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-8 py-4 rounded-3xl hover:from-cyan-600 hover:to-blue-700 transition-all transform hover:scale-105 duration-1000  font-semibold shadow-2xl"
+                >
+                  Schedule Installation
+                </a>
+                <a
+                  href="#products"
+                  className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-8 py-4 rounded-3xl hover:from-cyan-600 hover:to-blue-700 transition-all transform hover:scale-105 duration-1000  font-semibold shadow-2xl"
+                >
+                  View Products
+                </a>
+              </div>
+
+              <div className="flex flex-wrap gap-8 pt-6">
+                <div className="flex items-center gap-3">
+                  <div className="bg-cyan-500 bg-opacity-20 p-3 rounded-full border border-cyan-400 border-opacity-50">
+                    <Phone className="text-cyan-300" size={24} />
+                  </div>
+                  <div>
+                    <p className="text-sm text-cyan-200">Call Us</p>
+                    <p className="text-white font-semibold">+1 (555) 123-4567</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="bg-blue-500 bg-opacity-20 p-3 rounded-full border border-blue-400 border-opacity-50">
+                    <Mail className="text-blue-300" size={24} />
+                  </div>
+                  <div>
+                    <p className="text-sm text-blue-200">Email Us</p>
+                    <p className="text-white font-semibold">info@skelectrical.com</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative flex justify-center items-center">
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500 via-blue-500 to-transparent opacity-20 blur-3xl rounded-full"></div>
+
+              
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="text-center text-4xl font-bold my-8">

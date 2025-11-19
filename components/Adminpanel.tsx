@@ -6,10 +6,11 @@ import { Package, ShoppingCart, Camera } from "lucide-react";
 import ProductsTab from "../components/ProductsTab";
 import OrdersTab from "../components/OrdersTab";
 import PackagesTab from "../components/PackagesTab";
+import BookingTab from "./BookingTab";
 
 export default function AdminPanel() {
   const [activeTab, setActiveTab] = useState<
-    "products" | "orders" | "packages"
+    "products" | "orders" | "packages" | "booking"
   >("products");
   const [stats, setStats] = useState({
     totalProducts: 0,
@@ -46,7 +47,7 @@ export default function AdminPanel() {
   };
 
   // Refresh stats when tab changes
-  const handleTabChange = (tab: "products" | "orders" | "packages") => {
+  const handleTabChange = (tab: "products" | "orders" | "packages"| "booking") => {
     setActiveTab(tab);
     fetchStats();
   };
@@ -135,6 +136,29 @@ export default function AdminPanel() {
                 </span>
               </div>
             </button>
+
+             <button
+              onClick={() => handleTabChange("booking")}
+              className={`px-4 py-4 font-medium border-b-2 transition-colors ${
+                activeTab === "packages"
+                  ? "border-blue-600 text-blue-600"
+                  : "border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300"
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <Camera size={20} />
+                <span>Booking</span>
+                <span
+                  className={`ml-1 px-2 py-0.5 rounded-full text-xs ${
+                    activeTab === "booking"
+                      ? "bg-blue-100 text-blue-700"
+                      : "bg-gray-100 text-gray-600"
+                  }`}
+                >
+                  {stats.totalPackages}
+                </span>
+              </div>
+            </button>
           </div>
         </div>
       </div>
@@ -144,6 +168,7 @@ export default function AdminPanel() {
         {activeTab === "products" && <ProductsTab onUpdate={fetchStats} />}
         {activeTab === "orders" && <OrdersTab onUpdate={fetchStats} />}
         {activeTab === "packages" && <PackagesTab onUpdate={fetchStats} />}
+        {activeTab === "booking" && <BookingTab />}
       </div>
     </div>
   );
