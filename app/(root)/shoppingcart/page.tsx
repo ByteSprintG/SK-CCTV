@@ -267,13 +267,13 @@ export default function CartPage() {
                     <div className="flex gap-6">
                       {/* Product Image */}
                       <div className="flex-shrink-0 w-24 h-24 bg-gray-100 rounded-lg overflow-hidden">
-                        {/* <Image
+                        <img
                           src={item.image}
                           alt={item.title}
                           width={96}
                           height={96}
-                          className="w-full h-full object-cover"
-                        /> */}
+                          className="w-full h-full object-contain"
+                        />
                       </div>
 
                       {/* Product Details */}

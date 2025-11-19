@@ -7,11 +7,13 @@ const ProductCard = ({ post }: { post: any }) => {
       {/* Product Image */}
       <Link href={`/products/${post._id}`}>
         <div className="bg-gray-50 p-1 flex items-center justify-center h-56">
-          <img
-            src={post.image}
-            alt={post.title}
-            className="max-h-full max-w-full object-contain"
-          />
+          {post.image && (
+            <img
+              src={post.image}
+              alt={post.title}
+              className="max-h-full max-w-full object-contain"
+            />
+          )}
         </div>
       </Link>
 

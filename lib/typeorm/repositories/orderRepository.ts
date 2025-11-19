@@ -249,4 +249,121 @@ export class OrderRepository {
     const result = await repo.delete(new ObjectId(orderId));
     return (result.affected || 0) > 0;
   }
+
+  static async getAllOrders(): Promise<Order[]> {
+    const repo = await this.getRepository();
+    return repo.find({
+      order: { createdAt: "DESC" } as any,
+    });
+  }
+
+  // Get admin statistics
+  static async getAdminStats() {
+    const repo = await this.getRepository();
+    const orders = await repo.find();
+
+    const totalOrders = orders.length;
+    const totalRevenue = orders
+      .reduce((sum, order) => {
+        return (
+          sum +
+          parseFloat(order.totalPrice) +
+          parseFloat(order.tax) +
+          parseFloat(order.shippingCost)
+        );
+      }, 0)
+      .toFixed(2);
+
+    const pendingOrders = orders.filter(
+      (o) => o.orderStatus === "pending"
+    ).length;
+
+    const completedOrders = orders.filter(
+      (o) => o.orderStatus === "delivered"
+    ).length;
+
+    return {
+      totalOrders,
+      totalRevenue,
+      pendingOrders,
+      completedOrders,
+      totalProducts: 0, // You can fetch this from ProductRepository if needed
+    };
+  }
+
+  // Get orders by date range (for analytics)
+  static async getOrdersByDateRange(
+    startDate: Date,
+    endDate: Date
+  ): Promise<Order[]> {
+    const repo = await this.getRepository();
+    return repo.find({
+      where: {
+        createdAt: {
+          $gte: startDate,
+          $lte: endDate,
+        },
+      } as any,
+      order: { createdAt: "DESC" } as any,
+    });
+  }
+
+  // Get daily revenue
+  static async getDailyRevenue(days: number = 7) {
+    const repo = await this.getRepository();
+    const endDate = new Date();
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - days);
+
+    const orders = await repo.find({
+      where: {
+        createdAt: {
+          $gte: startDate,
+          $lte: endDate,
+        },
+      } as any,
+    });
+
+    // Group by date
+    const revenueByDate: { [key: string]: number } = {};
+
+    orders.forEach((order) => {
+      const date = new Date(order.createdAt).toLocaleDateString();
+      const revenue =
+        parseFloat(order.totalPrice) +
+        parseFloat(order.tax) +
+        parseFloat(order.shippingCost);
+      revenueByDate[date] = (revenueByDate[date] || 0) + revenue;
+    });
+
+    return revenueByDate;
+  }
+
+  // Get top customers
+  static async getTopCustomers(limit: number = 10) {
+    const repo = await this.getRepository();
+    const orders = await repo.find();
+
+    // Group by userId
+    const customerSpending: { [key: string]: number } = {};
+
+    orders.forEach((order) => {
+      const revenue =
+        parseFloat(order.totalPrice) +
+        parseFloat(order.tax) +
+        parseFloat(order.shippingCost);
+      customerSpending[order.userId] =
+        (customerSpending[order.userId] || 0) + revenue;
+    });
+
+    // Sort by spending and return top customers
+    return Object.entries(customerSpending)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, limit)
+      .map(([userId, spent]) => ({
+        userId,
+        totalSpent: spent.toFixed(2),
+      }));
+  }
+  
 }
