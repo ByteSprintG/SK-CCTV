@@ -21,7 +21,7 @@ const Navbar = async () => {
 
         <div>
           <Link className="p-3" href="/products">Shop All</Link>
-          <Link className="p-3" href="/about">About</Link>
+          <Link className="p-3" href="/cctv-packages">Packages</Link>
           <Link className="p-3" href="/contact">Contact</Link>
           <Link className="p-3" href="/shoppingcart">Cart</Link>
         </div>
