@@ -8,6 +8,7 @@ import {
   Camera,
   Search,
   ListOrdered,
+  User,
 } from "lucide-react";
 
 const homeNavbar = async () => {
@@ -17,7 +18,7 @@ const homeNavbar = async () => {
 
   return (
     <header className="justify-center shadow-sm">
-      <nav className="px-12 flex items-center justify-between py-4 fixed w-full bg-gradient-to-b from-slate-900 via-slate-900 to-transparent bg-opacity-80 backdrop-blur-md z-50 border-b border-cyan-500 border-opacity-20 shadow-lg">
+      <nav className="px-12 flex items-center justify-between py-2 fixed w-full bg-gradient-to-b from-slate-900 via-slate-900 to-transparent bg-opacity-80 backdrop-blur-md z-50 border-b border-cyan-500 border-opacity-20 shadow-lg">
         <Link className="p-3" href="/">
           <Image src="/logo.png" alt="logo" width={144} height={30} />
         </Link>
@@ -54,7 +55,7 @@ const homeNavbar = async () => {
             <>
               {isUserAdmin && (
                 <Link
-                  className="p-3 text-cyan-100 hover:text-cyan-300 px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:bg-cyan-500 hover:bg-opacity-10 relative group"
+                  className="p-3 text-red-500 hover:text-cyan-300 px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:bg-cyan-500 hover:bg-opacity-10 relative group"
                   href="/admin"
                 >
                   Admin Dashboard
@@ -79,16 +80,17 @@ const homeNavbar = async () => {
 
               <Link
                 href={`/profile`}
-                className="p-3 hover:text-blue-600 transition-colors flex items-center gap-2"
+                className="p-3 text-cyan-100 hover:text-cyan-300 px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:bg-cyan-500 hover:bg-opacity-10 relative group"
               >
                 {session.user.image ? (
-                  <Image
-                    src={session.user.image}
-                    alt="Profile"
-                    width={32}
-                    height={32}
-                    className="rounded-full"
-                  />
+                  // <Image
+                  //   src={session.user.image}
+                  //   alt="Profile"
+                  //   width={32}
+                  //   height={32}
+                  //   className="rounded-full"
+                  // />
+                  <User size={30} />
                 ) : (
                   <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white">
                     {session.user.name?.[0] || "?"}
