@@ -3,7 +3,6 @@ import { Product } from "../entities/Product";
 import { ObjectId } from "mongodb";
 
 export class ProductRepository {
-    
   static async getRepository() {
     const dataSource = await initializeDatabase();
     return dataSource.getMongoRepository(Product);
@@ -15,16 +14,21 @@ export class ProductRepository {
   }
 
   static async findById(id: string): Promise<Product | null> {
+    if (!ObjectId.isValid(id)) {
+      console.error("❌ Invalid ObjectId:", id);
+      return null;
+    }
+
     const repo = await this.getRepository();
     return repo.findOne({ where: { _id: new ObjectId(id) } as any });
   }
 
   static async searchProducts(query: string): Promise<Product[]> {
     const repo = await this.getRepository();
-    
+
     // Search in productname, title, description, and category
     const products = await repo.find();
-    
+
     if (!query) return products;
 
     const searchQuery = query.toLowerCase();
@@ -63,6 +67,8 @@ export class ProductRepository {
   static async deleteProduct(id: string): Promise<boolean> {
     const repo = await this.getRepository();
     const result = await repo.delete(new ObjectId(id));
-    return result.raw?.deleteCount !== undefined && result.raw?.deletedCount > 0;
+    return (
+      result.raw?.deleteCount !== undefined && result.raw?.deletedCount > 0
+    );
   }
 }

@@ -5,8 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import AddToCartButton from "@/components/AddToCartButton";
 
-const ProductDetailPage = async ({ params }: { params: { id: string } }) => {
-  const { id } = params;
+const ProductDetailPage = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = await params;
 
   // Fetch product from database
   const product = await ProductRepository.findById(id);
