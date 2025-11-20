@@ -13,7 +13,7 @@ const Contact = () => {
     comment: ''
   });
 
-  const [openFaq, setOpenFaq] = useState(null);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const faqs = [
     {
@@ -47,11 +47,11 @@ const Contact = () => {
     }
   ];
 
-  const toggleFaq = (id) => {
+  const toggleFaq = (id: number) => {
     setOpenFaq(openFaq === id ? null : id);
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -212,7 +212,7 @@ const Contact = () => {
               placeholder="Comment"
               value={formData.comment}
               onChange={handleChange}
-              rows="6"
+              rows={6}
               className="w-full px-6 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
             />
 
@@ -327,7 +327,7 @@ const Contact = () => {
             <div className="relative rounded-2xl overflow-hidden h-[400px] group cursor-pointer">
               <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/60">
                 <img 
-                  src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&h=600&fit=crop" 
+                  src="https://bleuwire.com/wp-content/uploads/2020/10/CCTV-monitoring.jpg" 
                   alt="Corporate Sales" 
                   className="w-full h-full object-cover mix-blend-overlay"
                 />
