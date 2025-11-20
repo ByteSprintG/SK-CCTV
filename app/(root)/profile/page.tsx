@@ -334,10 +334,10 @@ export default function ProfilePage() {
                 </button>
 
                 <button
-                  onClick={() => router.push("/wishlist")}
+                  onClick={() => router.push("/booking")}
                   className="w-full p-4 border border-gray-300 hover:bg-gray-50 rounded-lg text-left font-medium text-gray-900 transition-colors flex items-center justify-between"
                 >
-                  <span>My Wishlist</span>
+                  <span>View My Bookings</span>
                   <svg
                     className="w-5 h-5 text-gray-400"
                     fill="none"

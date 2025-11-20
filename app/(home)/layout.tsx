@@ -1,4 +1,4 @@
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/homeNavBar";
 import Footer from "@/components/Footer";
 import "@/lib/typeorm/init";
 import { SessionProvider } from "next-auth/react";

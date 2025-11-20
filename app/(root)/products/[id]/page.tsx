@@ -5,24 +5,19 @@ import Image from "next/image";
 import Link from "next/link";
 import AddToCartButton from "@/components/AddToCartButton";
 
-const ProductDetailPage = async ({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) => {
-  const { id } = await params;
+const ProductDetailPage = async ({ params }: { params: { id: string } }) => {
+  const { id } = params;
 
-  
   // Fetch product from database
   const product = await ProductRepository.findById(id);
 
-   // If product not found, show 404
+  // If product not found, show 404
   if (!product) {
     notFound();
   }
 
   const productData = {
-  _id: product._id.toString(),
+    _id: product._id.toString(),
     productname: product.productname,
     title: product.title,
     description: product.description,
@@ -32,9 +27,8 @@ const ProductDetailPage = async ({
     colors: product.colors,
     rating: product.rating,
     inStock: product.inStock,
-};
+  };
 
- 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -165,8 +159,8 @@ const ProductDetailPage = async ({
                 >
                   {product.inStock ? "Add to Cart" : "Out of Stock"}
                 </button> */}
-                
-<AddToCartButton product={productData} />
+
+                <AddToCartButton product={productData} />
 
                 {/* <AddToCartButton product={product} /> */}
                 <button className="px-6 py-3 border-2 border-blue-600 text-blue-600 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
@@ -206,9 +200,7 @@ const ProductDetailPage = async ({
                   />
                 </svg>
                 <div>
-                  <h4 className="font-semibold text-gray-900">
-                    Free Shipping
-                  </h4>
+                  <h4 className="font-semibold text-gray-900">Free Shipping</h4>
                   <p className="text-sm text-gray-600">
                     On orders over Rs 5000
                   </p>
