@@ -34,9 +34,6 @@ export class ProductRepository {
     const searchQuery = query.toLowerCase();
     return products.filter(
       (product) =>
-        product.productname.toLowerCase().includes(searchQuery) ||
-        product.title.toLowerCase().includes(searchQuery) ||
-        product.description.toLowerCase().includes(searchQuery) ||
         product.category.toLowerCase().includes(searchQuery)
     );
   }
