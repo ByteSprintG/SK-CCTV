@@ -23,7 +23,9 @@ const Navbar = async () => {
           <Link className="p-3" href="/products">Shop All</Link>
           <Link className="p-3" href="/cctv-packages">Packages</Link>
           <Link className="p-3" href="/contact">Contact</Link>
-          <Link className="p-3" href="/shoppingcart">Cart</Link>
+          {session?.user && (
+            <Link className="p-3" href="/shoppingcart">Cart</Link>
+          )}
         </div>
 
         <div className="flex items-center">
