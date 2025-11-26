@@ -5,8 +5,10 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import {useSession} from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
+import { auth } from "@/auth";
 
 interface CartItem {
   productId: string;
@@ -27,6 +29,7 @@ interface Cart {
 }
 
 export default function CartPage() {
+  const {status} = useSession();
   const [cart, setCart] = useState<Cart | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -34,8 +37,16 @@ export default function CartPage() {
   const router = useRouter();
 
   useEffect(() => {
-    fetchCart();
-  }, []);
+    if (status == "loading") return;
+
+    if(status == "unauthenticated"){
+      router.push("/api/auth/signin");
+      return;
+    }else{
+      fetchCart();
+    }
+    
+  }, [status, router]);
 
   const fetchCart = async () => {
     try {
