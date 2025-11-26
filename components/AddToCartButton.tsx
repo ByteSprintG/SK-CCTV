@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 interface AddToCartButtonProps {
   product: {
@@ -44,18 +45,17 @@ export default function AddToCartButton({ product }: AddToCartButtonProps) {
 
       if (!response.ok) {
         if (response.status === 401) {
-          // Redirect to sign in if not authenticated
-          router.push("/api/auth/signin");
+          signIn("google");
           return;
         }
         throw new Error(data.error || "Failed to add to cart");
       }
 
       setMessage("✓ Added to cart!");
-      
+
       // Optional: Refresh cart count in header
       // You can use a global state management solution here
-      
+
       setTimeout(() => setMessage(""), 3000);
     } catch (error: any) {
       setMessage(error.message || "Failed to add to cart");
