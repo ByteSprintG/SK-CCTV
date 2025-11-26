@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { MapPin, Clock, Truck, AlertCircle, CheckCircle } from "lucide-react";
 
 interface CCTVPackage {
@@ -17,7 +17,7 @@ interface CCTVPackage {
 export default function CCTVBookingPage() {
   const router = useRouter();
   const params = useParams();
-  const { data: session } = useSession();
+  const { data: session , status} = useSession();
   const packageId = params.packageId as string;
 
   const [packageData, setPackageData] = useState<CCTVPackage | null>(null);
@@ -48,16 +48,19 @@ export default function CCTVBookingPage() {
     alternatePhone: "",
   });
 
+
   useEffect(() => {
+    if (status === "loading") return;
+
     if (!session?.user?.email) {
-      router.push("/api/auth/signin");
+      signIn("google");
       return;
     }
 
     fetchPackage();
     setFormData((prev) => ({
       ...prev,
-    //   email: session?.user.email || "",
+      email: session?.user?.email || "",
     }));
   }, [session, packageId, router]);
 

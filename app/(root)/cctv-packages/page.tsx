@@ -84,10 +84,10 @@ export default function CCTVPackagesPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-12">
-        <div className="max-w-6xl mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-4">CCTV Installation Packages</h1>
-          <p className="text-xl text-blue-100">
+      <div className="flex text-black py-4 justify-center items-center">
+        <div className="flex flex-col items-center ax-w-6xl mx-auto px-4  ">
+          <h1 className="text-4xl mb-4 ">CCTV Installation Packages</h1>
+          <p className="text-sm text-black ">
             Professional security solutions for your home or business
           </p>
         </div>
@@ -102,9 +102,9 @@ export default function CCTVPackagesPage() {
         </div>
       )}
 
-      <div className="max-w-6xl mx-auto px-4 py-12">
+      <div className="max-w-6xl mx-auto px-4 py-4">
         {/* Filter Section */}
-        <div className="mb-12">
+        <div className="mb-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">
             Filter by Camera Count
           </h2>
@@ -156,9 +156,7 @@ export default function CCTVPackagesPage() {
                     alt={pkg.packagename}   
                     className="object-cover hover:scale-105 transition-transform duration-300"
                   />
-                  <div className="absolute top-4 right-4 bg-blue-600 text-white px-4 py-2 rounded-lg">
-                    <p className="font-bold">${pkg.price}</p>
-                  </div>
+                  
                 </div>
 
                 {/* Package Content */}
@@ -245,7 +243,7 @@ export default function CCTVPackagesPage() {
                   {/* Action Buttons */}
                   <div className="flex gap-3">
                     <Link
-                      href={`/cctv-packages/${pkg._id}`}
+                      href={`/cctv-packages/${pkg._id}/details`}
                       className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors text-center"
                     >
                       View Details
