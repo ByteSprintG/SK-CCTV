@@ -57,23 +57,21 @@ export default function AdminPanel() {
       {/* Header */}
       <div className="bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-8 py-6">
-          <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-          <p className="text-gray-600 mt-1">
-            Manage products, orders, and packages
-          </p>
+          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">Admin Dashboard</h1>
+          <p className="text-gray-600 mt-1">Manage products, orders, and packages</p>
         </div>
       </div>
 
       {/* Tabs Navigation */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-8">
-          <div className="flex gap-4">
+          <div className="flex gap-2">
             <button
               onClick={() => handleTabChange("products")}
-              className={`px-4 py-4 font-medium border-b-2 transition-colors ${
+              className={`px-4 py-3 font-semibold rounded-md transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00ADB5] ${
                 activeTab === "products"
-                  ? "border-blue-600 text-blue-600"
-                  : "border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300"
+                  ? "border-b-4 border-[#00ADB5] text-[#00ADB5] bg-[#00ADB5]/5"
+                  : "border-b-2 border-transparent text-gray-700 hover:text-gray-900 hover:bg-gray-50"
               }`}
             >
               <div className="flex items-center gap-2">
@@ -82,8 +80,8 @@ export default function AdminPanel() {
                 <span
                   className={`ml-1 px-2 py-0.5 rounded-full text-xs ${
                     activeTab === "products"
-                      ? "bg-blue-100 text-blue-700"
-                      : "bg-gray-100 text-gray-600"
+                      ? "bg-[#00ADB5]/20 text-[#00ADB5]"
+                      : "bg-gray-100 text-gray-700"
                   }`}
                 >
                   {stats.totalProducts}
@@ -93,10 +91,10 @@ export default function AdminPanel() {
 
             <button
               onClick={() => handleTabChange("orders")}
-              className={`px-4 py-4 font-medium border-b-2 transition-colors ${
+              className={`px-4 py-3 font-semibold rounded-md transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00ADB5] ${
                 activeTab === "orders"
-                  ? "border-blue-600 text-blue-600"
-                  : "border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300"
+                  ? "border-b-4 border-[#00ADB5] text-[#00ADB5] bg-[#00ADB5]/5"
+                  : "border-b-2 border-transparent text-gray-700 hover:text-gray-900 hover:bg-gray-50"
               }`}
             >
               <div className="flex items-center gap-2">
@@ -105,8 +103,8 @@ export default function AdminPanel() {
                 <span
                   className={`ml-1 px-2 py-0.5 rounded-full text-xs ${
                     activeTab === "orders"
-                      ? "bg-blue-100 text-blue-700"
-                      : "bg-gray-100 text-gray-600"
+                      ? "bg-[#00ADB5]/20 text-[#00ADB5]"
+                      : "bg-gray-100 text-gray-700"
                   }`}
                 >
                   {stats.totalOrders}
@@ -116,10 +114,10 @@ export default function AdminPanel() {
 
             <button
               onClick={() => handleTabChange("packages")}
-              className={`px-4 py-4 font-medium border-b-2 transition-colors ${
+              className={`px-4 py-3 font-semibold rounded-md transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00ADB5] ${
                 activeTab === "packages"
-                  ? "border-blue-600 text-blue-600"
-                  : "border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300"
+                  ? "border-b-4 border-[#00ADB5] text-[#00ADB5] bg-[#00ADB5]/5"
+                  : "border-b-2 border-transparent text-gray-700 hover:text-gray-900 hover:bg-gray-50"
               }`}
             >
               <div className="flex items-center gap-2">
@@ -128,8 +126,8 @@ export default function AdminPanel() {
                 <span
                   className={`ml-1 px-2 py-0.5 rounded-full text-xs ${
                     activeTab === "packages"
-                      ? "bg-blue-100 text-blue-700"
-                      : "bg-gray-100 text-gray-600"
+                      ? "bg-[#00ADB5]/20 text-[#00ADB5]"
+                      : "bg-gray-100 text-gray-700"
                   }`}
                 >
                   {stats.totalPackages}
@@ -139,10 +137,10 @@ export default function AdminPanel() {
 
              <button
               onClick={() => handleTabChange("booking")}
-              className={`px-4 py-4 font-medium border-b-2 transition-colors ${
-                activeTab === "packages"
-                  ? "border-blue-600 text-blue-600"
-                  : "border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300"
+              className={`px-4 py-3 font-semibold rounded-md transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00ADB5] ${
+                activeTab === "booking"
+                  ? "border-b-4 border-[#00ADB5] text-[#00ADB5] bg-[#00ADB5]/5"
+                  : "border-b-2 border-transparent text-gray-700 hover:text-gray-900 hover:bg-gray-50"
               }`}
             >
               <div className="flex items-center gap-2">
@@ -151,8 +149,8 @@ export default function AdminPanel() {
                 <span
                   className={`ml-1 px-2 py-0.5 rounded-full text-xs ${
                     activeTab === "booking"
-                      ? "bg-blue-100 text-blue-700"
-                      : "bg-gray-100 text-gray-600"
+                      ? "bg-[#00ADB5]/20 text-[#00ADB5]"
+                      : "bg-gray-100 text-gray-700"
                   }`}
                 >
                   {stats.totalPackages}
