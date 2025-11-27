@@ -1,3 +1,4 @@
+import CustomerChatbox from "@/components/customerChatbox";
 import { Mail, Phone } from "lucide-react";
 import Image from "next/image";
 
@@ -777,6 +778,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <CustomerChatbox />
     </div>
   );
 }
