@@ -163,7 +163,7 @@ const ProductDetailPage = async ({ params }: { params: Promise<{ id: string }> }
                 <AddToCartButton product={productData} />
 
                 {/* <AddToCartButton product={product} /> */}
-                <button className="px-6 py-3 border-2 border-blue-600 text-blue-600 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
+                {/* <button className="px-6 py-3 border-2 border-blue-600 text-blue-600 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
                   <svg
                     className="w-6 h-6"
                     fill="none"
@@ -177,8 +177,8 @@ const ProductDetailPage = async ({ params }: { params: Promise<{ id: string }> }
                       d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
                     />
                   </svg>
-                </button>
-              </div>
+                </button> */}
+                </div>
             </div>
           </div>
 
