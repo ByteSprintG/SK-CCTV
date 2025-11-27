@@ -9,6 +9,7 @@ export function cn(...inputs: ClassValue[]) {
 const ADMIN_EMAILS = [
   // Add your admin emails here
   'smaleesha84@gmail.com',  // Replace with actual admin email
+  'chandeepaabhisheka455@gmail.com'
 ]
 
 const TECHNICIAN_EMAILS = [
