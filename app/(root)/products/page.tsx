@@ -19,6 +19,7 @@ const product = async ({
 
   return (
     <>
+      
       <section>
         <div className="flex items-center gap-8 justify-center mt-4">
           {/* Image-like button */}
@@ -26,7 +27,7 @@ const product = async ({
             href="?query=camera"
             className="flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow hover:scale-105 transition-transform">
             <img
-              src="/camicon.png"
+              src="/cctvcam.png"
               alt="Camera"
               className="w-6 h-6 object-cover rounded"
             />
@@ -37,7 +38,7 @@ const product = async ({
             href="?query=Cable"
             className="flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow hover:scale-105 transition-transform">
             <img
-              src="/camicon.png"
+              src="/cabel.png"
               alt="Cable"
               className="w-6 h-6 object-cover rounded"
             />
@@ -48,7 +49,7 @@ const product = async ({
             href="?query=DVR"
             className="flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow hover:scale-105 transition-transform">
             <img
-              src="/camicon.png"
+              src="/dvrr.png"
               alt="DVR"
               className="w-6 h-6 object-cover rounded"
             />
@@ -59,7 +60,7 @@ const product = async ({
             href="?query=Storage"
             className="flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow hover:scale-105 transition-transform">
             <img
-              src="/camicon.png"
+              src="/harddsk.png"
               alt="Camera"
               className="w-6 h-6 object-cover rounded"
             />
@@ -70,7 +71,7 @@ const product = async ({
             href="?query=Monitor"
             className="flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow hover:scale-105 transition-transform">
             <img
-              src="/camicon.png"
+              src="/monitor.png"
               alt="Camera"
               className="w-6 h-6 object-cover rounded"
             />
@@ -81,7 +82,7 @@ const product = async ({
             href="?query=Ups"
             className="flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow hover:scale-105 transition-transform">
             <img
-              src="/camicon.png"
+              src="/ups.png"
               alt="Camera"
               className="w-6 h-6 object-cover rounded"
             />
@@ -92,8 +93,9 @@ const product = async ({
           <SearchForm query={query} />
         </div>
       </section>
-      <section className="justify-items-center mt-4">
-        <p className="text-4xl text-center">{query ? `Search result for "${query}"` : "All Products"}</p>
+      <div className="flex items-center justify-center mx-2">
+      <section className="justify-items-center mt-8">
+        <p className="text-4xl my-4 text-center">{query ? `Search result for "${query}"` : "All Products"}</p>
         <ul className="mt-7 card-grid mb-7 ">
           {posts?.length > 0 ? (
             posts.map((post: any, index: number) => (
@@ -104,6 +106,7 @@ const product = async ({
           )}
         </ul>
       </section>
+      </div>
     </>
   );
 };
