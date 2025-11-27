@@ -5,6 +5,10 @@ import {Cart} from "./entities/cart"
 import { Order } from "./entities/Order";
 import { CCTVPackage } from "./entities/CCTVPackage";
 import { CCTVBooking } from "./entities/CCTVBooking";
+import { ChatRoom } from "./entities/ChatRoom";
+import { Message } from "./entities/Message";
+import { ChatNotification } from "./entities/Notification";
+
 
 export const AppDataSource = new DataSource({
   type: "mongodb",
@@ -12,7 +16,7 @@ export const AppDataSource = new DataSource({
   database: process.env.MONGODB_DB || "SKdb",
   synchronize: process.env.NODE_ENV === "development", // Auto-create schema in dev
   logging: process.env.NODE_ENV === "development",
-  entities: [User, Product, Cart, Order, CCTVPackage, CCTVBooking],
+  entities: [User, Product, Cart, Order, CCTVPackage, CCTVBooking, ChatRoom, Message, ChatNotification],
 //   useUnifiedTopology: true,
 });
 
