@@ -12,7 +12,7 @@ export default function Home() {
           backgroundSize: "cover",
           backgroundPosition: "center",
           width: "100%",
-          height: "700px",
+          height: "550px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -60,18 +60,18 @@ export default function Home() {
         </svg>
 
         <div className="absolute top-30 left-300 w-24 h-24 border-2 border-cyan-500 opacity-20 animate-pulse"></div>
-        <div className="absolute bottom-35 right-20 w-24 h-24 border-2 border-blue-400 opacity-20"></div>
-        <div className="absolute bottom-40 left-350 w-40 h-40 border-2 border-cyan-600 opacity-10 animate-pulse"></div>
+        <div className="absolute top-70 right-20 w-24 h-24 border-2 border-blue-400 opacity-20"></div>
+        <div className="absolute top-80 left-350 w-40 h-40 border-2 border-cyan-600 opacity-10 animate-pulse"></div>
         <div className="absolute top-32 left-100 w-60 h-60 border-2 border-cyan-600 opacity-10 animate-pulse"></div>
 
-        <div className="absolute inline-flex top-40 left-25 gap-2 px-4 py-2 rounded-full border border-cyan-400 border-opacity-10">
-                <span className="text-cyan-300 font-medium text-sm">
+        <div className="absolute inline-flex top-30 left-12 gap-2 px-4 py-2 rounded-full border border-cyan-400 border-opacity-10">
+                <span className="text-cyan-300 font-light text-sm">
                   Advanced Surveillance Tech
                 </span>
               </div>
 
-        <div className="relative z-10 max-w-full mx-auto px-4 sm:px-6 lg:px-8 ml-18 mt-0 h-[650px] items-end">
-          <div className="grid md:grid-cols-[30%_70%] gap-12 items-center mt-60">
+        <div className="relative z-10 max-w-full mx-auto px-4 sm:px-6 lg:px-8 ml-4 mt-0 h-[650px] items-end">
+          <div className="grid md:grid-cols-[40%_60%] gap-12 items-center mt-60">
             {/* LEFT — 30% */}
             <div className="space-y-10">
               
@@ -84,22 +84,22 @@ export default function Home() {
                 </span>
               </h1>
 
-              <p className="text-lg text-cyan-100 leading-relaxed">
+              <p className="text-sm text-cyan-100 leading-relaxed font-medium">
                 Professional CCTV installation and sales services. Protect what
                 matters most with cutting-edge surveillance technology and
                 expert installation.
               </p>
 
-              <div className="flex flex-wrap gap-4 pt-4">
+              <div className="flex flex-wrap gap-4">
                 <a
                   href="/cctv-packages"
-                  className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-8 py-4 rounded-3xl hover:from-cyan-600 hover:to-blue-700 transition-all transform hover:scale-105 duration-1000 font-semibold shadow-2xl"
+                  className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-8 py-4 rounded-4xl hover:from-cyan-600 hover:to-blue-700 transition-all transform hover:scale-105 duration-1000 font-semibold shadow-2xl"
                 >
                   Schedule Installation
                 </a>
                 <a
                   href="/products"
-                  className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-8 py-4 rounded-3xl hover:from-cyan-600 hover:to-blue-700 transition-all transform hover:scale-105 duration-1000 font-semibold shadow-2xl"
+                  className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-8 py-4 rounded-4xl hover:from-cyan-600 hover:to-blue-700 transition-all transform hover:scale-105 duration-1000 font-semibold shadow-2xl"
                 >
                   View Products
                 </a>
@@ -118,7 +118,7 @@ export default function Home() {
                   <div>
                     <p className="text-sm text-cyan-200">Call Us</p>
                     <p className="text-white font-semibold">
-                      +1 (555) 123-4567
+                      +94 75 244 6520
                     </p>
                   </div>
                 </div>
@@ -138,6 +138,66 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+       <section className="py-12 bg-gray-50">
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 px-6 md:px-16 items-center justify-center">
+          {/* Brand 1 */}
+          <div className="bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition flex justify-center items-center">
+            <img
+              src="/Hikvision.png"
+              alt="Hikvision"
+              className="h-12 object-contain grayscale hover:grayscale-0 transition"
+            />
+          </div>
+
+          {/* Brand 2 */}
+          <div className="bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition flex justify-center items-center">
+            <img
+              src="/dahua-seeklogo.png"
+              alt="Dahua"
+              className="h-12 object-contain grayscale hover:grayscale-0 transition"
+            />
+          </div>
+
+          {/* Brand 3 */}
+          <div className="bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition flex justify-center items-center">
+            <img
+              src="/uniview-seeklogo.png"
+              alt="Uniview"
+              className="h-12 object-contain grayscale hover:grayscale-0 transition"
+            />
+          </div>
+
+          {/* Brand 4 */}
+          <div className="bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition flex justify-center items-center">
+            <img
+              src="/axis-communications-seeklogo.png"
+              alt="Axis"
+              className="h-12 object-contain grayscale hover:grayscale-0 transition"
+            />
+          </div>
+
+          {/* Brand 5 */}
+          <div className="bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition flex justify-center items-center">
+            <img
+              src="/idIWq5UP2d_logos.png"
+              alt="CP Plus"
+              className="h-12 object-contain grayscale hover:grayscale-0 transition"
+            />
+          </div>
+
+          {/* Brand 6 */}
+          <div className="bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition flex justify-center items-center">
+            <img
+              src="/ezviz-logo_brandlogos.net_z9wlt.png"
+              alt="Ezviz"
+              className="h-12 object-contain grayscale hover:grayscale-0 transition"
+            />
+          </div>
+        </div>
+      </section>
+
 
       <div className="text-center text-4xl font-bold my-8">
         Popular Packages
@@ -202,71 +262,7 @@ export default function Home() {
         </div>
       </div>
 
-      <section className="py-12 bg-gray-50">
-        <div className="text-center mb-8">
-          <h2 className="text-4xl font-bold text-gray-800">Our Brands</h2>
-          <p className="text-gray-500 mt-2">
-            We partner with the world’s leading CCTV and security brands
-          </p>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 px-6 md:px-16 items-center justify-center">
-          {/* Brand 1 */}
-          <div className="bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition flex justify-center items-center">
-            <img
-              src="/Hikvision.png"
-              alt="Hikvision"
-              className="h-12 object-contain grayscale hover:grayscale-0 transition"
-            />
-          </div>
-
-          {/* Brand 2 */}
-          <div className="bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition flex justify-center items-center">
-            <img
-              src="/brands/dahua.png"
-              alt="Dahua"
-              className="h-12 object-contain grayscale hover:grayscale-0 transition"
-            />
-          </div>
-
-          {/* Brand 3 */}
-          <div className="bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition flex justify-center items-center">
-            <img
-              src="/brands/uniview.png"
-              alt="Uniview"
-              className="h-12 object-contain grayscale hover:grayscale-0 transition"
-            />
-          </div>
-
-          {/* Brand 4 */}
-          <div className="bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition flex justify-center items-center">
-            <img
-              src="/brands/axis.png"
-              alt="Axis"
-              className="h-12 object-contain grayscale hover:grayscale-0 transition"
-            />
-          </div>
-
-          {/* Brand 5 */}
-          <div className="bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition flex justify-center items-center">
-            <img
-              src="/brands/cpplus.png"
-              alt="CP Plus"
-              className="h-12 object-contain grayscale hover:grayscale-0 transition"
-            />
-          </div>
-
-          {/* Brand 6 */}
-          <div className="bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition flex justify-center items-center">
-            <img
-              src="/brands/ezviz.png"
-              alt="Ezviz"
-              className="h-12 object-contain grayscale hover:grayscale-0 transition"
-            />
-          </div>
-        </div>
-      </section>
-
+     
       <section className="py-12 bg-gray-50">
         {/* Title */}
         <div className="text-center mb-8">
@@ -526,7 +522,7 @@ export default function Home() {
           {/* Image 1 */}
           <div className="relative group overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all duration-300">
             <img
-              src="/gallery/install1.jpg"
+              src="/person-showcasing-their-home-through-smartphone.jpg"
               alt="Installation 1"
               className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
             />
@@ -540,7 +536,7 @@ export default function Home() {
           {/* Image 2 */}
           <div className="relative group overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all duration-300">
             <img
-              src="/gallery/install2.jpg"
+              src="/person-showcasing-their-home-using-their-smartphone.jpg"
               alt="Installation 2"
               className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
             />
@@ -554,7 +550,7 @@ export default function Home() {
           {/* Image 3 */}
           <div className="relative group overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all duration-300">
             <img
-              src="/gallery/install3.jpg"
+              src="/security-camera-urban-video (1).jpg"
               alt="Installation 3"
               className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
             />
@@ -568,7 +564,7 @@ export default function Home() {
           {/* Image 4 */}
           <div className="relative group overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all duration-300">
             <img
-              src="/gallery/install4.jpg"
+              src="/security-camera-urban-video.jpg"
               alt="Installation 4"
               className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
             />
@@ -582,7 +578,7 @@ export default function Home() {
           {/* Image 5 */}
           <div className="relative group overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all duration-300">
             <img
-              src="/gallery/install5.jpg"
+              src="/surveillance-camera-built-into-stone-wall-building.jpg"
               alt="Installation 5"
               className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
             />
@@ -596,7 +592,7 @@ export default function Home() {
           {/* Image 6 */}
           <div className="relative group overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all duration-300">
             <img
-              src="/gallery/install6.jpg"
+              src="/view-robot-tending-maintaining-gardens.jpg"
               alt="Installation 6"
               className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
             />
@@ -610,7 +606,7 @@ export default function Home() {
           {/* Image 7 */}
           <div className="relative group overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all duration-300">
             <img
-              src="/gallery/install7.jpg"
+              src="/home-security-camera.jpg"
               alt="Installation 7"
               className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
             />
@@ -624,7 +620,7 @@ export default function Home() {
           {/* Image 8 */}
           <div className="relative group overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all duration-300">
             <img
-              src="/gallery/install8.jpg"
+              src="/modern-technology-controls-secure-domestic-room-indoors-generated-by-ai.jpg"
               alt="Installation 8"
               className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
             />
@@ -779,7 +775,7 @@ export default function Home() {
         </div>
       </section>
 
-      <CustomerChatbox />
+                
     </div>
   );
 }
