@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { ChatRoomRepository } from "@/lib/typeorm/repositories/chatRepository";
 import { MessageRepository } from "@/lib/typeorm/repositories/messageRepository";
+import { UserRepository } from "@/lib/typeorm/repositories/userRepository";
 
 // GET all chat rooms (for technician dashboard)
 export async function GET(request: Request) {
@@ -60,9 +61,12 @@ export async function POST(request: Request) {
       );
     }
 
+    const user = await UserRepository.findByEmail(session.user.email);
+    console.log("USER FOUND:", user);
+
     const chatRoom = await ChatRoomRepository.getOrCreateChatRoom(
       session.user.email,
-      customerName
+      user?.name || customerName
     );
 
     return NextResponse.json({ 

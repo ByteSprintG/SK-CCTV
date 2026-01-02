@@ -17,6 +17,9 @@ export class ChatRoom {
   @ObjectIdColumn()
   _id!: ObjectId;
 
+  // @Column({ unique: true })
+  // userId!: string;
+
   @Column({ unique: true })
   customerId!: string; // The customer who owns this chat room
 

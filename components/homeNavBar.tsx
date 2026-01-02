@@ -20,33 +20,44 @@ const homeNavbar = async () => {
     <header className="justify-center shadow-sm">
       <nav className="px-12 flex items-center justify-between py-2 fixed w-full bg-gradient-to-b from-slate-900 via-slate-900 to-transparent bg-opacity-80 backdrop-blur-md z-50 border-b border-cyan-500 border-opacity-20 shadow-lg">
         <Link className="p-3" href="/">
-          <Image src="/logo.png" alt="logo" width={144} height={30} />
+          <Image src="/logo.png" alt="logo" width={144} height={20} />
         </Link>
 
-        <div>
+        <div className="flex gap-2">
           <Link
-            className="p-3 text-cyan-100 hover:text-cyan-300 px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:bg-cyan-500 hover:bg-opacity-10 relative group"
+            className="group relative px-6 py-2 text-cyan-100 font-light transition-colors duration-300 hover:text-white text-sm"
             href="/"
           >
             Home
+            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-cyan-400 to-blue-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-cyan-400 blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
           </Link>
+
           <Link
-            className="p-3 text-cyan-100 hover:text-cyan-300 px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:bg-cyan-500 hover:bg-opacity-10 relative group"
+            className="group relative px-6 py-2 text-cyan-100 font-light transition-colors duration-300 hover:text-white text-sm"
             href="/products"
           >
             Shop All
+            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-cyan-400 to-blue-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-cyan-400 blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
           </Link>
+
           <Link
-            className="p-3 text-cyan-100 hover:text-cyan-300 px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:bg-cyan-500 hover:bg-opacity-10 relative group"
+            className="group relative px-6 py-2 text-cyan-100 font-light transition-colors duration-300 hover:text-white text-sm"
             href="/cctv-packages"
           >
             Packages
+            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-cyan-400 to-blue-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-cyan-400 blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
           </Link>
+
           <Link
-            className="p-3 text-cyan-100 hover:text-cyan-300 px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:bg-cyan-500 hover:bg-opacity-10 relative group"
+            className="group relative px-6 py-2 text-cyan-100 font-light transition-colors duration-300 hover:text-white text-sm"
             href="/contact"
           >
             Contact
+            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-cyan-400 to-blue-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-cyan-400 blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
           </Link>
         </div>
 
@@ -55,10 +66,12 @@ const homeNavbar = async () => {
             <>
               {isUserAdmin && (
                 <Link
-                  className="p-3 text-red-500 hover:text-cyan-300 px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:bg-cyan-500 hover:bg-opacity-10 relative group"
+                  className="group relative px-6 py-2 text-cyan-100 font-light transition-colors duration-300 hover:text-white text-sm"
                   href="/admin"
                 >
                   Admin Dashboard
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-cyan-400 to-blue-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-cyan-400 blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                 </Link>
               )}
 
@@ -121,7 +134,7 @@ const homeNavbar = async () => {
                   alt="Google"
                   className="w-5 h-5"
                 />
-                <span className="text-sm font-medium text-cyan-100">
+                <span className="text-sm font-light text-cyan-100">
                   Sign in with Google
                 </span>
               </button>
