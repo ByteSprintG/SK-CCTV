@@ -221,7 +221,7 @@ const [messages, setMessages] = useState<Message[]>([]);
   }
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-165 bg-gray-100">
       {/* Sidebar - Chat Rooms List */}
       <div className="w-80 bg-white border-r border-gray-200 flex flex-col">
         {/* Header */}
@@ -289,7 +289,7 @@ const [messages, setMessages] = useState<Message[]>([]);
                         {formatDate(room.lastMessageAt)}
                       </p>
                     </div>
-                    <button
+                    {/* <button
                       onClick={(e) => {
                         e.stopPropagation();
                         handleCloseRoom(room._id);
@@ -310,7 +310,7 @@ const [messages, setMessages] = useState<Message[]>([]);
                           d="M6 18L18 6M6 6l12 12"
                         />
                       </svg>
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               );
@@ -349,12 +349,12 @@ const [messages, setMessages] = useState<Message[]>([]);
                     <p className="text-xs text-gray-500">Customer ID: {selectedRoom.customerId}</p>
                   </div>
                 </div>
-                <button
+                {/* <button
                   onClick={() => handleCloseRoom(selectedRoom._id)}
                   className="px-4 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                 >
                   Close Chat
-                </button>
+                </button> */}
               </div>
             </div>
 
