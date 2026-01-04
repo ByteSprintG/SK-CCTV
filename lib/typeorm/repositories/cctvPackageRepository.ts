@@ -32,6 +32,16 @@ export class CCTVPackageRepository {
     });
   }
 
+  //find top3 packages
+  static async findTopThree(): Promise<CCTVPackage[]> {
+    const repo = await this.getRepository();
+    return repo.find({
+      where: { isAvailable: true } as any,
+      take: 3,
+      order: { createdAt: "DESC" } as any,
+    });
+  }
+
   // Get single package by ID
   static async getPackageById(packageId: string): Promise<CCTVPackage | null> {
     const repo = await this.getRepository();

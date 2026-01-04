@@ -1,8 +1,24 @@
 import CustomerChatbox from "@/components/customerChatbox";
-import { Mail, Phone } from "lucide-react";
+import { Mail, Package, Phone } from "lucide-react";
 import Image from "next/image";
+import ProductCard from './../../components/ProductCard';
+import { ProductRepository } from "@/lib/typeorm/repositories/productRepository";
+import React from "react";
+import { Star, Camera, Clock, Shield, Zap } from "lucide-react";
+import Link from "next/link";
+import { CCTVPackageRepository } from "@/lib/typeorm/repositories/cctvPackageRepository";
 
-export default function Home() {
+
+
+
+export default async function Home() {
+
+   const posts = await ProductRepository.findTopFour();
+
+   const Packages = await CCTVPackageRepository.findTopThree();
+
+   
+
   return (
     <div>
       <div
@@ -203,64 +219,93 @@ export default function Home() {
         Popular Packages
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-6 mb-12">
-        {/* Package 1 */}
-        <div className="bg-white shadow-lg rounded-2xl overflow-hidden hover:scale-105 transition-transform duration-300">
-          <img
-            src="/closeup-cctv-camera-wall.jpg"
-            alt="Basic CCTV Package"
-            className="w-full h-48 object-cover"
-          />
-          <div className="p-6 text-center">
-            <h2 className="text-2xl font-semibold mb-2">Basic Package</h2>
-            <p className="text-gray-600 mb-4">
-              Includes 2 HD cameras with DVR setup and installation.
-            </p>
-            <p className="text-xl font-bold text-blue-600 mb-4">$199</p>
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
-              View Details
-            </button>
-          </div>
-        </div>
+       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-6 md:px-16">
+            {Packages.map((pkg) => (
+              <div
+                key={pkg._id.toString()}
+                className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+              >
+                {/* Package Image */}
+                <div className="relative h-48 bg-gray-200 overflow-hidden">
+                  <img
+                    src={pkg.coverImage || pkg.image}
+                    alt={pkg.packagename}   
+                    className="object-cover hover:scale-105 transition-transform duration-300"
+                  />
+                  
+                </div>
 
-        {/* Package 2 */}
-        <div className="bg-white shadow-lg rounded-2xl overflow-hidden hover:scale-105 transition-transform duration-300">
-          <img
-            src="/3d-rendering-biorobots-concept.jpg"
-            alt="Standard CCTV Package"
-            className="w-full h-48 object-cover"
-          />
-          <div className="p-6 text-center">
-            <h2 className="text-2xl font-semibold mb-2">Standard Package</h2>
-            <p className="text-gray-600 mb-4">
-              4 HD cameras, DVR with remote access, and full setup.
-            </p>
-            <p className="text-xl font-bold text-blue-600 mb-4">$349</p>
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
-              View Details
-            </button>
-          </div>
-        </div>
+                {/* Package Content */}
+                <div className="p-6">
+                  {/* Title */}
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">
+                    {pkg.packagename}
+                  </h3>
 
-        {/* Package 3 */}
-        <div className="bg-white shadow-lg rounded-2xl overflow-hidden hover:scale-105 transition-transform duration-300">
-          <img
-            src="/set-security-cameras.jpg"
-            alt="Premium CCTV Package"
-            className="w-full h-48 object-cover"
-          />
-          <div className="p-6 text-center">
-            <h2 className="text-2xl font-semibold mb-2">Premium Package</h2>
-            <p className="text-gray-600 mb-4">
-              8 HD cameras, DVR + Cloud storage, remote mobile access.
-            </p>
-            <p className="text-xl font-bold text-blue-600 mb-4">$599</p>
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
-              View Details
-            </button>
-          </div>
+                  {/* Short Description */}
+                  <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                    {pkg.shortDescription}
+                  </p>
+
+                  {/* Rating */}
+                  <div className="flex items-center gap-1 mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        size={16}
+                        className={`${
+                          i < Math.round(pkg.rating)
+                            ? "fill-yellow-400 text-yellow-400"
+                            : "text-gray-300"
+                        }`}
+                      />
+                    ))}
+                    <span className="text-sm text-gray-600 ml-2">
+                      ({pkg.rating}/5)
+                    </span>
+                  </div>
+
+                  {/* Key Features */}
+                  <div className="space-y-3 mb-6 pb-6 border-b border-gray-200">
+                    <div className="flex items-center gap-2 text-gray-700">
+                      <Camera size={18} className="text-blue-600" />
+                      <span className="text-sm">
+                        {pkg.cameras} Cameras
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2 text-gray-700">
+                      <Clock size={18} className="text-blue-600" />
+                      <span className="text-sm">
+                        Installation: {pkg.installationDays} days
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2 text-gray-700">
+                      <Shield size={18} className="text-blue-600" />
+                      <span className="text-sm">Warranty: {pkg.warranty}</span>
+                    </div>
+                  </div>
+
+                  
+
+                  {/* Action Buttons */}
+                  <div className="flex gap-3">
+                    <Link
+                      href={`/cctv-packages/${pkg._id}/details`}
+                      className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors text-center"
+                    >
+                      View Details
+                    </Link>
+                    <Link
+                      href={`/cctv-packages/${pkg._id}/booking`}
+                      className="flex-1 px-4 py-2 border-2 border-blue-600 text-blue-600 hover:bg-blue-50 font-semibold rounded-lg transition-colors text-center"
+                    >
+                      Book Now
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
         </div>
-      </div>
 
      
       <section className="py-12 bg-gray-50">
@@ -268,7 +313,7 @@ export default function Home() {
         <div className="text-center mb-8">
           <h2 className="text-4xl font-bold text-gray-800">
             Popular{" "}
-            <span className="underline decoration-blue-500">Categories</span>
+            Categories
           </h2>
           <p className="text-gray-500 mt-2">
             Explore the best CCTV and security product categories
@@ -345,7 +390,7 @@ export default function Home() {
         {/* Title */}
         <div className="text-center mb-10">
           <h2 className="text-4xl font-bold text-gray-800">
-            Best <span className="underline decoration-blue-500">Sellers</span>
+            Best Sellers
           </h2>
           <p className="text-gray-500 mt-2">
             Our most trusted and popular security products
@@ -354,155 +399,15 @@ export default function Home() {
 
         {/* Product Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 px-6 md:px-16">
-          {/* Product Card 1 */}
-          <div className="bg-gray-50 rounded-2xl shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300 cursor-pointer">
-            <div className="relative">
-              <img
-                src="/products/cctv-camera.jpg"
-                alt="HD CCTV Camera"
-                className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <span className="absolute top-3 left-3 bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
-                Hot
-              </span>
-            </div>
-            <div className="p-5">
-              <h3 className="text-lg font-semibold text-gray-800">
-                HD CCTV Camera
-              </h3>
-              <p className="text-sm text-gray-500 mt-1">1080p | Night Vision</p>
 
-              {/* Rating */}
-              <div className="flex items-center mt-3 text-yellow-400">
-                <span>⭐</span>
-                <span>⭐</span>
-                <span>⭐</span>
-                <span>⭐</span>
-                <span className="text-gray-300">⭐</span>
-              </div>
-
-              {/* Price */}
-              <div className="flex justify-between items-center mt-4">
-                <span className="text-xl font-bold text-blue-600">
-                  LKR 18,500
-                </span>
-                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition">
-                  Add to Cart
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Product Card 2 */}
-          <div className="bg-gray-50 rounded-2xl shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300 cursor-pointer">
-            <div className="relative">
-              <img
-                src="/products/wireless-kit.jpg"
-                alt="Wireless CCTV Kit"
-                className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <span className="absolute top-3 left-3 bg-green-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
-                Bestseller
-              </span>
-            </div>
-            <div className="p-5">
-              <h3 className="text-lg font-semibold text-gray-800">
-                Wireless CCTV Kit
-              </h3>
-              <p className="text-sm text-gray-500 mt-1">
-                4 Cameras | 1TB Storage
-              </p>
-              <div className="flex items-center mt-3 text-yellow-400">
-                <span>⭐</span>
-                <span>⭐</span>
-                <span>⭐</span>
-                <span>⭐</span>
-                <span>⭐</span>
-              </div>
-              <div className="flex justify-between items-center mt-4">
-                <span className="text-xl font-bold text-blue-600">
-                  LKR 48,900
-                </span>
-                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition">
-                  Add to Cart
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Product Card 3 */}
-          <div className="bg-gray-50 rounded-2xl shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300 cursor-pointer">
-            <div className="relative">
-              <img
-                src="/products/doorbell.jpg"
-                alt="Smart Doorbell"
-                className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <span className="absolute top-3 left-3 bg-orange-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
-                Trending
-              </span>
-            </div>
-            <div className="p-5">
-              <h3 className="text-lg font-semibold text-gray-800">
-                Smart Doorbell
-              </h3>
-              <p className="text-sm text-gray-500 mt-1">
-                2-Way Audio | App Control
-              </p>
-              <div className="flex items-center mt-3 text-yellow-400">
-                <span>⭐</span>
-                <span>⭐</span>
-                <span>⭐</span>
-                <span>⭐</span>
-                <span className="text-gray-300">⭐</span>
-              </div>
-              <div className="flex justify-between items-center mt-4">
-                <span className="text-xl font-bold text-blue-600">
-                  LKR 14,700
-                </span>
-                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition">
-                  Add to Cart
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Product Card 4 */}
-          <div className="bg-gray-50 rounded-2xl shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300 cursor-pointer">
-            <div className="relative">
-              <img
-                src="/products/dvr.jpg"
-                alt="8-Channel DVR"
-                className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <span className="absolute top-3 left-3 bg-purple-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
-                Featured
-              </span>
-            </div>
-            <div className="p-5">
-              <h3 className="text-lg font-semibold text-gray-800">
-                8-Channel DVR
-              </h3>
-              <p className="text-sm text-gray-500 mt-1">
-                H.265+ | Remote Access
-              </p>
-              <div className="flex items-center mt-3 text-yellow-400">
-                <span>⭐</span>
-                <span>⭐</span>
-                <span>⭐</span>
-                <span>⭐</span>
-                <span className="text-gray-300">⭐</span>
-              </div>
-              <div className="flex justify-between items-center mt-4">
-                <span className="text-xl font-bold text-blue-600">
-                  LKR 22,300
-                </span>
-                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition">
-                  Add to Cart
-                </button>
-              </div>
-            </div>
-          </div>
+          {/* <ProductCard /> */}
+           {posts?.length > 0 ? (
+            posts.map((post: any, index: number) => (
+              <ProductCard key={post?._id} post={post} />
+            ))
+          ) : (
+            <p className="text-center text-2xl">No Products</p>
+          )}
         </div>
       </section>
 
@@ -510,7 +415,7 @@ export default function Home() {
         {/* Title */}
         <div className="text-center mb-10">
           <h2 className="text-4xl font-bold text-gray-800">
-            Our <span className="underline decoration-blue-500">Gallery</span>
+            Our Gallery
           </h2>
           <p className="text-gray-500 mt-2">
             Explore our recent CCTV installations and setups
@@ -638,7 +543,7 @@ export default function Home() {
         <div className="text-center mb-10">
           <h2 className="text-4xl font-bold text-gray-800">
             What Our{" "}
-            <span className="underline decoration-blue-500">Customers Say</span>
+            Customers Say
           </h2>
           <p className="text-gray-500 mt-2">
             Real experiences from our happy clients

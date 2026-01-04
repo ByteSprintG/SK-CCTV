@@ -13,6 +13,12 @@ export class ProductRepository {
     return repo.find();
   }
 
+  //need to get camera products only
+  static async findTopFour(): Promise<Product[]> {
+    const repo = await this.getRepository();
+    return repo.find({ where: { category: "Camera" } as any, take: 4 });
+  }
+
   static async findById(id: string): Promise<Product | null> {
     if (!ObjectId.isValid(id)) {
       console.error("❌ Invalid ObjectId:", id);
