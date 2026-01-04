@@ -1,23 +1,17 @@
 import CustomerChatbox from "@/components/customerChatbox";
 import { Mail, Package, Phone } from "lucide-react";
 import Image from "next/image";
-import ProductCard from './../../components/ProductCard';
+import ProductCard from "./../../components/ProductCard";
 import { ProductRepository } from "@/lib/typeorm/repositories/productRepository";
 import React from "react";
 import { Star, Camera, Clock, Shield, Zap } from "lucide-react";
 import Link from "next/link";
 import { CCTVPackageRepository } from "@/lib/typeorm/repositories/cctvPackageRepository";
 
-
-
-
 export default async function Home() {
+  const posts = await ProductRepository.findTopFour();
 
-   const posts = await ProductRepository.findTopFour();
-
-   const Packages = await CCTVPackageRepository.findTopThree();
-
-   
+  const Packages = await CCTVPackageRepository.findTopThree();
 
   return (
     <div>
@@ -81,17 +75,15 @@ export default async function Home() {
         <div className="absolute top-32 left-100 w-60 h-60 border-2 border-cyan-600 opacity-10 animate-pulse"></div>
 
         <div className="absolute inline-flex top-30 left-12 gap-2 px-4 py-2 rounded-full border border-cyan-400 border-opacity-10">
-                <span className="text-cyan-300 font-light text-sm">
-                  Advanced Surveillance Tech
-                </span>
-              </div>
+          <span className="text-cyan-300 font-light text-sm">
+            Advanced Surveillance Tech
+          </span>
+        </div>
 
         <div className="relative z-10 max-w-full mx-auto px-4 sm:px-6 lg:px-8 ml-4 mt-0 h-[650px] items-end">
           <div className="grid md:grid-cols-[40%_60%] gap-12 items-center mt-60">
             {/* LEFT — 30% */}
             <div className="space-y-10">
-              
-
               <h1 className="text-5xl md:text-6xl font-bold text-white leading-tight">
                 Welcome to Our
                 <span className="bg-gradient-to-r from-cyan-400 to-blue-300 bg-clip-text text-transparent">
@@ -133,9 +125,7 @@ export default async function Home() {
                   </div>
                   <div>
                     <p className="text-sm text-cyan-200">Call Us</p>
-                    <p className="text-white font-semibold">
-                      +94 75 244 6520
-                    </p>
+                    <p className="text-white font-semibold">+94 75 244 6520</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -155,8 +145,7 @@ export default async function Home() {
         </div>
       </div>
 
-       <section className="py-12 bg-gray-50">
-
+      <section className="py-12 bg-gray-50">
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 px-6 md:px-16 items-center justify-center">
           {/* Brand 1 */}
           <div className="bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition flex justify-center items-center">
@@ -214,106 +203,98 @@ export default async function Home() {
         </div>
       </section>
 
-
       <div className="text-center text-4xl font-bold my-8">
         Popular Packages
       </div>
 
-       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-6 md:px-16">
-            {Packages.map((pkg) => (
-              <div
-                key={pkg._id.toString()}
-                className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
-              >
-                {/* Package Image */}
-                <div className="relative h-48 bg-gray-200 overflow-hidden">
-                  <img
-                    src={pkg.coverImage || pkg.image}
-                    alt={pkg.packagename}   
-                    className="object-cover hover:scale-105 transition-transform duration-300"
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-6 md:px-16">
+        {Packages.map((pkg) => (
+          <div
+            key={pkg._id.toString()}
+            className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            {/* Package Image */}
+            <div className="relative h-48 bg-gray-200 overflow-hidden">
+              <img
+                src={pkg.coverImage || pkg.image}
+                alt={pkg.packagename}
+                className="object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+
+            {/* Package Content */}
+            <div className="p-6">
+              {/* Title */}
+              <h3 className="text-xl font-bold text-gray-900 mb-2">
+                {pkg.packagename}
+              </h3>
+
+              {/* Short Description */}
+              <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                {pkg.shortDescription}
+              </p>
+
+              {/* Rating */}
+              <div className="flex items-center gap-1 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <Star
+                    key={i}
+                    size={16}
+                    className={`${
+                      i < Math.round(pkg.rating)
+                        ? "fill-yellow-400 text-yellow-400"
+                        : "text-gray-300"
+                    }`}
                   />
-                  
+                ))}
+                <span className="text-sm text-gray-600 ml-2">
+                  ({pkg.rating}/5)
+                </span>
+              </div>
+
+              {/* Key Features */}
+              <div className="space-y-3 mb-6 pb-6 border-b border-gray-200">
+                <div className="flex items-center gap-2 text-gray-700">
+                  <Camera size={18} className="text-blue-600" />
+                  <span className="text-sm">{pkg.cameras} Cameras</span>
                 </div>
-
-                {/* Package Content */}
-                <div className="p-6">
-                  {/* Title */}
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">
-                    {pkg.packagename}
-                  </h3>
-
-                  {/* Short Description */}
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                    {pkg.shortDescription}
-                  </p>
-
-                  {/* Rating */}
-                  <div className="flex items-center gap-1 mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        size={16}
-                        className={`${
-                          i < Math.round(pkg.rating)
-                            ? "fill-yellow-400 text-yellow-400"
-                            : "text-gray-300"
-                        }`}
-                      />
-                    ))}
-                    <span className="text-sm text-gray-600 ml-2">
-                      ({pkg.rating}/5)
-                    </span>
-                  </div>
-
-                  {/* Key Features */}
-                  <div className="space-y-3 mb-6 pb-6 border-b border-gray-200">
-                    <div className="flex items-center gap-2 text-gray-700">
-                      <Camera size={18} className="text-blue-600" />
-                      <span className="text-sm">
-                        {pkg.cameras} Cameras
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2 text-gray-700">
-                      <Clock size={18} className="text-blue-600" />
-                      <span className="text-sm">
-                        Installation: {pkg.installationDays} days
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2 text-gray-700">
-                      <Shield size={18} className="text-blue-600" />
-                      <span className="text-sm">Warranty: {pkg.warranty}</span>
-                    </div>
-                  </div>
-
-                  
-
-                  {/* Action Buttons */}
-                  <div className="flex gap-3">
-                    <Link
-                      href={`/cctv-packages/${pkg._id}/details`}
-                      className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors text-center"
-                    >
-                      View Details
-                    </Link>
-                    <Link
-                      href={`/cctv-packages/${pkg._id}/booking`}
-                      className="flex-1 px-4 py-2 border-2 border-blue-600 text-blue-600 hover:bg-blue-50 font-semibold rounded-lg transition-colors text-center"
-                    >
-                      Book Now
-                    </Link>
-                  </div>
+                <div className="flex items-center gap-2 text-gray-700">
+                  <Clock size={18} className="text-blue-600" />
+                  <span className="text-sm">
+                    Installation: {pkg.installationDays} days
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-gray-700">
+                  <Shield size={18} className="text-blue-600" />
+                  <span className="text-sm">Warranty: {pkg.warranty}</span>
                 </div>
               </div>
-            ))}
-        </div>
 
-     
+              {/* Action Buttons */}
+              <div className="flex gap-3">
+                <Link
+                  href={`/cctv-packages/${pkg._id}/details`}
+                  className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors text-center"
+                >
+                  View Details
+                </Link>
+                <Link
+                  href={`/cctv-packages/${pkg._id}/booking`}
+                  className="flex-1 px-4 py-2 border-2 border-blue-600 text-blue-600 hover:bg-blue-50 font-semibold rounded-lg transition-colors text-center"
+                >
+                  Book Now
+                </Link>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
       <section className="py-12 bg-gray-50">
         {/* Title */}
         <div className="text-center mb-8">
           <h2 className="text-4xl font-bold text-gray-800">
-            Popular{" "}
-            Categories
+            Popular Categories
           </h2>
           <p className="text-gray-500 mt-2">
             Explore the best CCTV and security product categories
@@ -322,59 +303,69 @@ export default async function Home() {
 
         {/* Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-6 md:px-16">
-          {/* Left large image */}
-          <div className="relative rounded-2xl overflow-hidden md:row-span-2 group cursor-pointer">
+         
+          {/* CCTV Systems */}
+          <Link
+            href="/products?query=camera"
+            className="relative rounded-2xl overflow-hidden md:row-span-2 group cursor-pointer block"
+          >
             <img
-              src="/categories/cctv-systems.jpg"
+              src="WhatsApp Image 2026-01-04 at 6.31.13 PM.jpeg"
               alt="CCTV Systems"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             />
-            <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center text-white text-center transition duration-300 group-hover:bg-opacity-60">
+            <div className="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-white text-center transition duration-300 group-hover:bg-black/60">
               <h3 className="text-3xl font-bold mb-2">CCTV Systems</h3>
               <p className="text-sm uppercase tracking-wide flex items-center gap-1">
                 Explore <span>›</span>
               </p>
             </div>
-          </div>
-
-          {/* Top right card */}
-          <div className="relative rounded-2xl overflow-hidden group cursor-pointer">
+          </Link>
+          {/* Wireless Cameras */}
+          <Link
+            href="/products?query=camera"
+            className="relative rounded-2xl overflow-hidden group cursor-pointer block"
+          >
             <img
-              src="/categories/wireless-cameras.jpg"
+              src="WhatsApp Image 2026-01-04 at 6.30.03 PM.jpeg"
               alt="Wireless Cameras"
               className="w-full h-60 object-cover transition-transform duration-500 group-hover:scale-110"
             />
-            <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center text-white transition duration-300 group-hover:bg-opacity-60">
+            <div className="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-white transition duration-300 group-hover:bg-black/60">
               <h3 className="text-2xl font-bold mb-2">Wireless Cameras</h3>
               <p className="text-sm uppercase tracking-wide flex items-center gap-1">
                 Explore <span>›</span>
               </p>
             </div>
-          </div>
-
-          {/* Middle right card */}
-          <div className="relative rounded-2xl overflow-hidden group cursor-pointer">
+          </Link>
+          {/* Smart Doorbells */}
+          <Link
+            href="/products?query=doorbell"
+            className="relative rounded-2xl overflow-hidden group cursor-pointer block"
+          >
             <img
-              src="/categories/smart-doorbells.jpg"
+              src="WhatsApp Image 2026-01-04 at 6.31.36 PM.jpeg"
               alt="Smart Doorbells"
               className="w-full h-60 object-cover transition-transform duration-500 group-hover:scale-110"
             />
-            <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center text-white transition duration-300 group-hover:bg-opacity-60">
+            <div className="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-white transition duration-300 group-hover:bg-black/60">
               <h3 className="text-2xl font-bold mb-2">Smart Doorbells</h3>
               <p className="text-sm uppercase tracking-wide flex items-center gap-1">
                 Explore <span>›</span>
               </p>
             </div>
-          </div>
-
-          {/* Bottom right card */}
-          <div className="relative rounded-2xl overflow-hidden group cursor-pointer md:col-span-2">
+          </Link>
+          {/* Access Control Systems */}
+          <Link
+            href="/products?query=access-control"
+            className="relative rounded-2xl overflow-hidden group cursor-pointer md:col-span-2 block"
+          >
             <img
-              src="/categories/access-control.jpg"
+              src="2101.i211.016_door knobs handles realistic composition 2.jpg"
               alt="Access Control Systems"
               className="w-full h-60 object-cover transition-transform duration-500 group-hover:scale-110"
             />
-            <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center text-white transition duration-300 group-hover:bg-opacity-60">
+            <div className="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-white transition duration-300 group-hover:bg-black/60">
               <h3 className="text-2xl font-bold mb-2">
                 Access Control Systems
               </h3>
@@ -382,16 +373,14 @@ export default async function Home() {
                 Explore <span>›</span>
               </p>
             </div>
-          </div>
+          </Link>
         </div>
       </section>
 
       <section className="py-16 bg-white">
         {/* Title */}
         <div className="text-center mb-10">
-          <h2 className="text-4xl font-bold text-gray-800">
-            Best Sellers
-          </h2>
+          <h2 className="text-4xl font-bold text-gray-800">Best Sellers</h2>
           <p className="text-gray-500 mt-2">
             Our most trusted and popular security products
           </p>
@@ -399,9 +388,8 @@ export default async function Home() {
 
         {/* Product Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 px-6 md:px-16">
-
           {/* <ProductCard /> */}
-           {posts?.length > 0 ? (
+          {posts?.length > 0 ? (
             posts.map((post: any, index: number) => (
               <ProductCard key={post?._id} post={post} />
             ))
@@ -414,9 +402,7 @@ export default async function Home() {
       <section className="py-16 bg-gray-50">
         {/* Title */}
         <div className="text-center mb-10">
-          <h2 className="text-4xl font-bold text-gray-800">
-            Our Gallery
-          </h2>
+          <h2 className="text-4xl font-bold text-gray-800">Our Gallery</h2>
           <p className="text-gray-500 mt-2">
             Explore our recent CCTV installations and setups
           </p>
@@ -542,8 +528,7 @@ export default async function Home() {
         {/* Title */}
         <div className="text-center mb-10">
           <h2 className="text-4xl font-bold text-gray-800">
-            What Our{" "}
-            Customers Say
+            What Our Customers Say
           </h2>
           <p className="text-gray-500 mt-2">
             Real experiences from our happy clients
@@ -679,8 +664,6 @@ export default async function Home() {
           </div>
         </div>
       </section>
-
-                
     </div>
   );
 }
