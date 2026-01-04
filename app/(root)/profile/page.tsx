@@ -353,7 +353,7 @@ export default function ProfilePage() {
                   </svg>
                 </button>
 
-                <button
+                {/* <button
                   onClick={() => router.push("/settings")}
                   className="w-full p-4 border border-gray-300 hover:bg-gray-50 rounded-lg text-left font-medium text-gray-900 transition-colors flex items-center justify-between"
                 >
@@ -371,7 +371,7 @@ export default function ProfilePage() {
                       d="M9 5l7 7-7 7"
                     />
                   </svg>
-                </button>
+                </button> */}
 
                 <button
                   onClick={handleLogout}
