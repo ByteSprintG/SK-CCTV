@@ -298,7 +298,7 @@ export default function ProductsTab({ onUpdate }: ProductsTabProps) {
                       {product.category}
                     </td>
                     <td className="px-6 py-4 font-semibold text-gray-900">
-                      ${product.price}
+                      Rs {product.price}
                     </td>
                     <td className="px-6 py-4">
                       <span

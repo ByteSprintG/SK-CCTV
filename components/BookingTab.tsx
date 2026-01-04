@@ -242,7 +242,7 @@ export default function BookingsTab({ onUpdate }: BookingsTabProps) {
             <div>
               <p className="text-gray-600 text-sm">Total Revenue</p>
               <p className="text-3xl font-bold text-gray-900">
-                ${parseFloat(stats.totalRevenue).toFixed(2)}
+                Rs {parseFloat(stats.totalRevenue)}
               </p>
             </div>
             <DollarSign size={32} className="text-green-600 opacity-20" />
@@ -395,7 +395,7 @@ export default function BookingsTab({ onUpdate }: BookingsTabProps) {
                       </span>
                     </td>
                     <td className="px-6 py-4 font-semibold text-gray-900">
-                      ${parseFloat(booking.totalPrice).toFixed(2)}
+                      Rs {parseFloat(booking.totalPrice)}
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex gap-2">

@@ -460,7 +460,7 @@ export default function AdminPackagesPage({ onUpdate }: PackageTabProps) {
                         </span>
                       </td>
                       <td className="px-6 py-4 font-semibold text-gray-900">
-                        ${pkg.price}
+                        Rs {pkg.price}
                       </td>
                       <td className="px-6 py-4 text-gray-700">
                         <span className="bg-gray-100 px-3 py-1 rounded-full text-sm">
@@ -651,7 +651,7 @@ export default function AdminPackagesPage({ onUpdate }: PackageTabProps) {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Price ($)
+                      Price (Rs )
                     </label>
                     <input
                       type="number"
@@ -773,7 +773,7 @@ export default function AdminPackagesPage({ onUpdate }: PackageTabProps) {
                       <option value="">Select a product</option>
                       {allProducts.map((product) => (
                         <option key={product._id} value={product._id}>
-                          {product.productname} - ${product.price}
+                          {product.productname} - Rs {product.price}
                         </option>
                       ))}
                     </select>
@@ -812,7 +812,7 @@ export default function AdminPackagesPage({ onUpdate }: PackageTabProps) {
                               {product.title}
                             </p>
                             <p className="text-sm text-gray-600">
-                              Qty: {product.quantity} × ${product.price}
+                              Qty: {product.quantity} × Rs {product.price}
                             </p>
                           </div>
                           <button

@@ -299,7 +299,7 @@ export default function CartPage() {
                             </p>
                           </div>
                           <p className="text-lg font-bold text-blue-600">
-                            ${parseFloat(item.price).toFixed(2)}
+                            Rs {parseFloat(item.price).toFixed(2)}
                           </p>
                         </div>
 
@@ -355,8 +355,8 @@ export default function CartPage() {
                           <div className="ml-auto text-right">
                             <p className="text-sm text-gray-600">Subtotal</p>
                             <p className="text-lg font-bold text-gray-900">
-                              $
-                              {(parseFloat(item.price) * item.quantity).toFixed(
+                              Rs
+                               {(parseFloat(item.price) * item.quantity).toFixed(
                                 2
                               )}
                             </p>
@@ -400,19 +400,19 @@ export default function CartPage() {
                   <div className="flex justify-between">
                     <span className="text-gray-600">Subtotal</span>
                     <span className="font-semibold text-gray-900">
-                      ${parseFloat(cart.totalPrice).toFixed(2)}
+                      Rs {parseFloat(cart.totalPrice).toFixed(2)}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Shipping</span>
                     <span className="font-semibold text-gray-900">
-                      $0.00 (Free)
+                      Rs 0.00 (Free)
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Tax</span>
                     <span className="font-semibold text-gray-900">
-                      ${(parseFloat(cart.totalPrice) * 0.1).toFixed(2)}
+                      Rs {(parseFloat(cart.totalPrice) * 0.1).toFixed(2)}
                     </span>
                   </div>
                 </div>
@@ -424,7 +424,7 @@ export default function CartPage() {
                       Total
                     </span>
                     <span className="text-2xl font-bold text-blue-600">
-                      ${(parseFloat(cart.totalPrice) * 1.1).toFixed(2)}
+                      Rs{(parseFloat(cart.totalPrice) * 1.1).toFixed(2)}
                     </span>
                   </div>
                   <p className="text-xs text-gray-500 mt-1">
@@ -452,7 +452,7 @@ export default function CartPage() {
                 <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
                   <p className="text-sm text-blue-900">
                     <span className="font-semibold">Free Shipping!</span> on all
-                    orders over $50
+                    orders over Rs 50
                   </p>
                 </div>
               </div>

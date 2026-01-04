@@ -261,10 +261,10 @@ export default function OrderConfirmationPage() {
                       </div>
                       <div className="text-right">
                         <p className="font-semibold text-gray-900">
-                          ${parseFloat(item.price).toFixed(2)}
+                          Rs {parseFloat(item.price).toFixed(2)}
                         </p>
                         <p className="text-sm text-gray-600">
-                          ${(parseFloat(item.price) * item.quantity).toFixed(2)}{" "}
+                          Rs {(parseFloat(item.price) * item.quantity).toFixed(2)}{" "}
                           total
                         </p>
                       </div>
@@ -318,28 +318,28 @@ export default function OrderConfirmationPage() {
                 <div className="flex justify-between">
                   <span className="text-gray-600">Subtotal</span>
                   <span className="font-semibold text-gray-900">
-                    ${parseFloat(order?.totalPrice || "0").toFixed(2)}
+                    Rs {parseFloat(order?.totalPrice || "0").toFixed(2)}
                   </span>
                 </div>
 
                 <div className="flex justify-between">
                   <span className="text-gray-600">Shipping</span>
                   <span className="font-semibold text-gray-900">
-                    ${parseFloat(order?.shippingCost || "0").toFixed(2)}
+                    Rs {parseFloat(order?.shippingCost || "0").toFixed(2)}
                   </span>
                 </div>
 
                 <div className="flex justify-between">
                   <span className="text-gray-600">Tax</span>
                   <span className="font-semibold text-gray-900">
-                    ${parseFloat(order?.tax || "0").toFixed(2)}
+                    Rs {parseFloat(order?.tax || "0").toFixed(2)}
                   </span>
                 </div>
 
                 <div className="border-t border-gray-200 pt-3 flex justify-between">
                   <span className="font-semibold text-gray-900">Total</span>
                   <span className="text-2xl font-bold text-green-600">
-                    ${grandTotal.toFixed(2)}
+                    Rs {grandTotal.toFixed(2)}
                   </span>
                 </div>
               </div>

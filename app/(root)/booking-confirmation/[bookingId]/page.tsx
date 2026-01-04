@@ -153,7 +153,7 @@ export default function BookingConfirmationPage() {
                 <div className="flex justify-between items-center">
                   <span className="text-gray-600">Total Price</span>
                   <span className="text-2xl font-bold text-blue-600">
-                    ${booking.totalPrice}
+                    Rs {booking.totalPrice}
                   </span>
                 </div>
               </div>

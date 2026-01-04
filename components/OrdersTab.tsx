@@ -198,7 +198,7 @@ export default function OrdersTab({ onUpdate }: OrdersTabProps) {
             <div>
               <p className="text-gray-600 text-sm">Total Revenue</p>
               <p className="text-3xl font-bold text-gray-900">
-                ${parseFloat(stats.totalRevenue).toFixed(2)}
+                Rs {parseFloat(stats.totalRevenue)}
               </p>
             </div>
             <DollarSign size={32} className="text-green-600 opacity-20" />
@@ -322,12 +322,12 @@ export default function OrdersTab({ onUpdate }: OrdersTabProps) {
                       {order.totalItems} item{order.totalItems !== 1 ? "s" : ""}
                     </td>
                     <td className="px-6 py-4 font-semibold text-gray-900">
-                      $
-                      {(
+                      Rs 
+                       {(
                         parseFloat(order.totalPrice) +
                         parseFloat(order.tax) +
                         parseFloat(order.shippingCost)
-                      ).toFixed(2)}
+                      )}
                     </td>
                     <td className="px-6 py-4">
                       <span

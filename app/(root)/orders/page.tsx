@@ -212,7 +212,7 @@ export default function OrdersPage() {
             <div className="bg-white rounded-lg shadow p-6">
               <p className="text-gray-600 text-sm font-medium">Total Spent</p>
               <p className="text-3xl font-bold text-gray-900 mt-2">
-                ${parseFloat(stats.totalSpent).toFixed(2)}
+                Rs {parseFloat(stats.totalSpent).toFixed(1)}
               </p>
             </div>
 
@@ -363,7 +363,7 @@ export default function OrdersPage() {
                       </div>
                       <p className="text-sm text-gray-600">
                         {order.totalItems} item{order.totalItems !== 1 ? "s" : ""}{" "}
-                        · Total: ${(
+                        · Total: Rs {(
                           parseFloat(order.totalPrice) +
                           parseFloat(order.tax) +
                           parseFloat(order.shippingCost)
@@ -383,8 +383,8 @@ export default function OrdersPage() {
                     {/* Order Footer */}
                     <div className="flex flex-col sm:flex-row gap-3 justify-between items-start sm:items-center">
                       <div className="text-sm text-gray-600">
-                        <p>Subtotal: ${parseFloat(order.totalPrice).toFixed(2)}</p>
-                        <p>Tax: ${parseFloat(order.tax).toFixed(2)}</p>
+                        <p>Subtotal: Rs {parseFloat(order.totalPrice).toFixed(2)}</p>
+                        <p>Tax: Rs {parseFloat(order.tax).toFixed(2)}</p>
                       </div>
 
                       <div className="flex gap-3 w-full sm:w-auto">
@@ -480,7 +480,7 @@ export default function OrdersPage() {
                         </p>
                       </div>
                       <p className="font-semibold text-gray-900">
-                        ${(parseFloat(item.price) * item.quantity).toFixed(2)}
+                        Rs {(parseFloat(item.price) * item.quantity).toFixed(2)}
                       </p>
                     </div>
                   ))}
@@ -493,25 +493,25 @@ export default function OrdersPage() {
                   <div className="flex justify-between">
                     <span className="text-gray-600">Subtotal</span>
                     <span className="font-semibold">
-                      ${parseFloat(selectedOrder.totalPrice).toFixed(2)}
+                      Rs {parseFloat(selectedOrder.totalPrice).toFixed(2)}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Tax</span>
                     <span className="font-semibold">
-                      ${parseFloat(selectedOrder.tax).toFixed(2)}
+                      Rs {parseFloat(selectedOrder.tax).toFixed(2)}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Shipping</span>
                     <span className="font-semibold">
-                      ${parseFloat(selectedOrder.shippingCost).toFixed(2)}
+                      Rs {parseFloat(selectedOrder.shippingCost).toFixed(2)}
                     </span>
                   </div>
                   <div className="border-t border-gray-200 pt-2 flex justify-between">
                     <span className="font-semibold text-gray-900">Total</span>
                     <span className="text-xl font-bold text-blue-600">
-                      ${(
+                      Rs {(
                         parseFloat(selectedOrder.totalPrice) +
                         parseFloat(selectedOrder.tax) +
                         parseFloat(selectedOrder.shippingCost)
