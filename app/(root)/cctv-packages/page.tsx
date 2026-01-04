@@ -209,37 +209,7 @@ export default function CCTVPackagesPage() {
                     </div>
                   </div>
 
-                  {/* Features List */}
-                  <div className="mb-6">
-                    <p className="font-semibold text-gray-900 text-sm mb-2">
-                      Includes:
-                    </p>
-                    <ul className="space-y-1">
-                      {pkg.features.slice(0, 3).map((feature, idx) => (
-                        <li
-                          key={idx}
-                          className="text-sm text-gray-600 flex items-center gap-2"
-                        >
-                          <Zap size={14} className="text-blue-600" />
-                          {feature}
-                        </li>
-                      ))}
-                      {pkg.features.length > 3 && (
-                        <li className="text-sm text-blue-600 font-medium">
-                          +{pkg.features.length - 3} more features
-                        </li>
-                      )}
-                    </ul>
-                  </div>
-
-                  {/* Coverage */}
-                  <div className="mb-6 p-3 bg-blue-50 rounded-lg">
-                    <p className="text-sm font-medium text-gray-900 mb-1">
-                      Coverage Area:
-                    </p>
-                    <p className="text-sm text-gray-700">{pkg.coverage}</p>
-                  </div>
-
+                 
                   {/* Action Buttons */}
                   <div className="flex gap-3">
                     <Link

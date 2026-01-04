@@ -8,14 +8,14 @@ export function cn(...inputs: ClassValue[]) {
 // List of authorized admin email addresses
 const ADMIN_EMAILS = [
   // Add your admin emails here
-  'smaleesha84@gmail.com',  // Replace with actual admin email
+  'smaleesha84@gmail.com',  
   'chandeepaabhisheka455@gmail.com',
   'kanishkadewinda1102@gmail.com'
 ]
 
 const TECHNICIAN_EMAILS = [
   // Add your admin emails here
-  's19524@sci.pdn.ac.lk',  // Replace with actual admin email
+  's19524@sci.pdn.ac.lk',  
 ]
 
 export function isAdmin(email: string | null | undefined) {
