@@ -216,7 +216,7 @@ export default async function Home() {
             {/* Package Image */}
             <div className="relative h-48 bg-gray-200 overflow-hidden">
               <img
-                src={pkg.coverImage || pkg.image}
+                src={pkg.image}
                 alt={pkg.packagename}
                 className="object-cover hover:scale-105 transition-transform duration-300"
               />
