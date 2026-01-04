@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { MessageCircle, X, Send, Bell } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { isTechnician } from "@/lib/utils";
 
 
 
@@ -214,9 +215,11 @@ export default function CustomerChat() {
 
   const { data: session, status } = useSession();
 
-if (status === "loading") return null;
+  if (status === "loading") return null;
 
-if (!session) return null; // Hide chat completely
+  const isUserTechnician = isTechnician(session?.user?.email);
+
+  if (!session || isUserTechnician) return null; // Hide chat completely for technicians
 
   return (
     <>
