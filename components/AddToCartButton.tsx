@@ -53,10 +53,11 @@ export default function AddToCartButton({ product }: AddToCartButtonProps) {
 
       setMessage("✓ Added to cart!");
 
-      // Optional: Refresh cart count in header
-      // You can use a global state management solution here
-
-      setTimeout(() => setMessage(""), 3000);
+      // Navigate to the cart page after a short delay so the user sees the message
+      setTimeout(() => {
+        setMessage("");
+        router.push("/shoppingcart");
+      }, 700);
     } catch (error: any) {
       setMessage(error.message || "Failed to add to cart");
       setTimeout(() => setMessage(""), 3000);
