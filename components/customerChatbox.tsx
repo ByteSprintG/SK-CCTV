@@ -1,29 +1,40 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, KeyboardEvent } from "react";
 import { MessageCircle, X, Send, Bell } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { isTechnician } from "@/lib/utils";
 
+interface Message {
+  _id: string;
+  senderType: string;
+  senderName?: string;
+  content: string;
+  createdAt: string;
+  isRead?: boolean;
+}
 
-
-// const session = await auth();
-
+interface ChatRoom {
+  _id: string;
+  customerName?: string;
+}
 
 export default function CustomerChat() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState("");
-  const [chatRoom, setChatRoom] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [sending, setSending] = useState(false);
-  const [unreadCount, setUnreadCount] = useState(0);
-  const [showNotification, setShowNotification] = useState(false);
-  const [latestMessage, setLatestMessage] = useState(null);
-  const [notificationPermission, setNotificationPermission] = useState("default");
-  const messagesEndRef = useRef(null);
-  const previousMessageCountRef = useRef(0);
-  const audioRef = useRef(null);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [newMessage, setNewMessage] = useState<string>("");
+  const [chatRoom, setChatRoom] = useState<ChatRoom | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [sending, setSending] = useState<boolean>(false);
+  const [unreadCount, setUnreadCount] = useState<number>(0);
+  const [showNotification, setShowNotification] = useState<boolean>(false);
+  const [latestMessage, setLatestMessage] = useState<Message | null>(null);
+  const [notificationPermission, setNotificationPermission] = useState<NotificationPermission>(
+    "default"
+  );
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const previousMessageCountRef = useRef<number>(0);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // Request notification permission on mount
   useEffect(() => {
@@ -31,7 +42,7 @@ export default function CustomerChat() {
       setNotificationPermission(Notification.permission);
     }
     // Create audio element for notification sound
-    audioRef.current = new Audio("data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIGmm98OScTgwOUKXh8LZjHAU5k9nyyXkrBSh+zPLaizsIHm3A8uihUhELTKXh8bllHgU2jdXxy3ouBSl/z/PajDsIG2/D9OekUREKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEK");
+    audioRef.current = new Audio("data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIGmm98OScTgwOUKXh8LZjHAU5k9nyyXkrBSh+zPLaizsIHm3A8uihUhELTKXh8bllHgU2jdXxy3ouBSl/z/PajDsIG2/D9OekUREKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEKTKbh8bllHgU3j9fxy3ouBSh/zvLaizsIHG/E9OejUhEK");
   }, []);
 
   // Scroll to bottom when messages change
@@ -39,14 +50,14 @@ export default function CustomerChat() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // Initialize chat room on component mount (to track messages even when closed)
+  // Initialize chat room on component mount (ALWAYS, not just when open)
   useEffect(() => {
-    if (isOpen && !chatRoom && !loading) {
-    initializeChatRoom();
-  }
-}, [isOpen]);
+    if (!chatRoom && !loading) {
+      initializeChatRoom();
+    }
+  }, []);
 
-  const initializeChatRoom = async () => {
+  const initializeChatRoom = async (): Promise<void> => {
     setLoading(true);
     try {
       const response = await fetch("/api/chat/rooms", {
@@ -74,9 +85,9 @@ export default function CustomerChat() {
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [chatRoom]);
+  }, [chatRoom, isOpen]);
 
-  const fetchMessages = async (roomId) => {
+  const fetchMessages = async (roomId: string): Promise<void> => {
     if (!roomId) return;
 
     try {
@@ -85,20 +96,22 @@ export default function CustomerChat() {
       );
 
       const data = await response.json();
-      const newMessages = data.messages || [];
-      
+      const newMessages: Message[] = data.messages || [];
+
       // Check for new technician messages
-      const technicianMessages = newMessages.filter(msg => msg.senderType === "technician");
-      
+      const technicianMessages = newMessages.filter(
+        (msg) => msg.senderType === "technician"
+      );
+
       if (technicianMessages.length > previousMessageCountRef.current) {
         const latestTechMessage = technicianMessages[technicianMessages.length - 1];
-        
+
         // Only show notification if chat is closed
         if (!isOpen && latestTechMessage) {
           showNewMessageNotification(latestTechMessage);
         }
       }
-      
+
       previousMessageCountRef.current = technicianMessages.length;
       setMessages(newMessages);
 
@@ -116,7 +129,7 @@ export default function CustomerChat() {
     }
   };
 
-  const showNewMessageNotification = (message) => {
+  const showNewMessageNotification = (message: Message): void => {
     // Play notification sound
     if (audioRef.current) {
       audioRef.current.play().catch(e => console.log("Audio play failed:", e));
@@ -137,14 +150,14 @@ export default function CustomerChat() {
     }
   };
 
-  const requestNotificationPermission = async () => {
+  const requestNotificationPermission = async (): Promise<void> => {
     if ("Notification" in window && Notification.permission === "default") {
       const permission = await Notification.requestPermission();
       setNotificationPermission(permission);
     }
   };
 
-  const markMessagesAsRead = async (roomId) => {
+  const markMessagesAsRead = async (roomId: string): Promise<void> => {
     try {
       await fetch("/api/chat/messages/read", {
         method: "POST",
@@ -160,7 +173,7 @@ export default function CustomerChat() {
     }
   };
 
-  const handleSendMessage = async () => {
+  const handleSendMessage = async (): Promise<void> => {
     if (!newMessage.trim() || !chatRoom || sending) return;
 
     setSending(true);
@@ -187,14 +200,14 @@ export default function CustomerChat() {
     }
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if ((e as any).key === "Enter" && !(e as any).shiftKey) {
       e.preventDefault();
       handleSendMessage();
     }
   };
 
-  const formatTime = (date) => {
+  const formatTime = (date: string): string => {
     return new Date(date).toLocaleTimeString("en-US", {
       hour: "2-digit",
       minute: "2-digit",
@@ -212,14 +225,13 @@ export default function CustomerChat() {
     }
   }, [isOpen]);
 
-
   const { data: session, status } = useSession();
 
   if (status === "loading") return null;
 
   const isUserTechnician = isTechnician(session?.user?.email);
 
-  if (!session || isUserTechnician) return null; // Hide chat completely for technicians
+  if (!session || isUserTechnician) return null; // Hide chat for technicians or unauthenticated users
 
   return (
     <>

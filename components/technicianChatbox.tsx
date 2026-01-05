@@ -1,19 +1,8 @@
-"use client"
+"use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, KeyboardEvent } from "react";
 
-export default function TechnicianDashboard() {
-//   const [chatRooms, setChatRooms] = useState([]);
-  const [selectedRoom, setSelectedRoom] = useState(null);
-//   const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [sending, setSending] = useState(false);
-  const [notifications, setNotifications] = useState([]);
-  const [totalUnread, setTotalUnread] = useState(0);
-  const messagesEndRef = useRef(null);
-
-  interface ChatRoom {
+interface ChatRoom {
   _id: string;
   customerName: string;
   customerId: string;
@@ -29,13 +18,42 @@ interface Message {
   createdAt: string;
 }
 
-const [chatRooms, setChatRooms] = useState<ChatRoom[]>([]);
-const [messages, setMessages] = useState<Message[]>([]);
+interface Notification {
+  chatRoomId: string;
+  unreadCount: number;
+}
+
+export default function TechnicianDashboard() {
+  const [selectedRoom, setSelectedRoom] = useState<ChatRoom | null>(null);
+  const [newMessage, setNewMessage] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [sending, setSending] = useState(false);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [totalUnread, setTotalUnread] = useState(0);
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+  const [chatRooms, setChatRooms] = useState<ChatRoom[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
+
+  // Sort rooms: unread messages first, then most recent lastMessageAt
+  const sortRooms = (rooms: ChatRoom[]) => {
+    return [...rooms].sort((a, b) => {
+      const aUnread =
+        notifications.find((n) => n.chatRoomId === a._id)?.unreadCount || 0;
+      const bUnread =
+        notifications.find((n) => n.chatRoomId === b._id)?.unreadCount || 0;
+      if (aUnread !== bUnread) return bUnread - aUnread;
+
+      const aTime = a.lastMessageAt ? new Date(a.lastMessageAt).getTime() : 0;
+      const bTime = b.lastMessageAt ? new Date(b.lastMessageAt).getTime() : 0;
+      return bTime - aTime;
+    });
+  };
 
   // Auto-scroll to bottom
-//   const scrollToBottom = () => {
-//     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-//   };
+  //   const scrollToBottom = () => {
+  //     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  //   };
 
   useEffect(() => {
     // scrollToBottom();
@@ -45,7 +63,7 @@ const [messages, setMessages] = useState<Message[]>([]);
   useEffect(() => {
     fetchChatRooms();
     fetchNotifications();
-    
+
     // Poll for updates every 3 seconds
     const interval = setInterval(() => {
       fetchChatRooms();
@@ -63,9 +81,35 @@ const [messages, setMessages] = useState<Message[]>([]);
     try {
       const response = await fetch("/api/chat/rooms?status=active");
       if (!response.ok) throw new Error("Failed to fetch chat rooms");
-      
+
       const data = await response.json();
-      setChatRooms(data.chatRooms || []);
+      const rooms: ChatRoom[] = data.chatRooms || [];
+
+      // Enrich rooms with the latest message/time when available
+      const enriched = await Promise.all(
+        rooms.map(async (room) => {
+          try {
+            const res = await fetch(
+              `/api/chat/messages?chatRoomId=${room._id}&limit=1&sort=desc`
+            );
+            if (!res.ok) return room;
+            const d = await res.json();
+            const lastMsg = (d.messages && d.messages[0]) || null;
+            if (lastMsg) {
+              return {
+                ...room,
+                lastMessage: lastMsg.content || room.lastMessage,
+                lastMessageAt: lastMsg.createdAt || room.lastMessageAt,
+              } as ChatRoom;
+            }
+            return room;
+          } catch (e) {
+            return room;
+          }
+        })
+      );
+
+      setChatRooms(sortRooms(enriched));
     } catch (error) {
       console.error("Error fetching chat rooms:", error);
     } finally {
@@ -78,21 +122,27 @@ const [messages, setMessages] = useState<Message[]>([]);
     try {
       const response = await fetch("/api/chat/notifications");
       if (!response.ok) throw new Error("Failed to fetch notifications");
-      
+
       const data = await response.json();
-      setNotifications(data.notifications || []);
+      const notifs = data.notifications || [];
+      setNotifications(notifs);
       setTotalUnread(data.totalUnread || 0);
+
+      // Re-sort existing chatRooms so rooms with unread messages move to top
+      setChatRooms((prev) => sortRooms(prev));
     } catch (error) {
       console.error("Error fetching notifications:", error);
     }
   };
 
   // Fetch messages for selected room
-  const fetchMessages = async (roomId : string) => {
+  const fetchMessages = async (roomId: string): Promise<void> => {
     try {
-      const response = await fetch(`/api/chat/messages?chatRoomId=${roomId}&limit=100`);
+      const response = await fetch(
+        `/api/chat/messages?chatRoomId=${roomId}&limit=100`
+      );
       if (!response.ok) throw new Error("Failed to fetch messages");
-      
+
       const data = await response.json();
       setMessages(data.messages || []);
     } catch (error) {
@@ -101,16 +151,16 @@ const [messages, setMessages] = useState<Message[]>([]);
   };
 
   // Select a chat room
-  const handleSelectRoom = async (room) => {
+  const handleSelectRoom = async (room: ChatRoom): Promise<void> => {
     setSelectedRoom(room);
     await fetchMessages(room._id);
-    
+
     // Mark messages as read
     await markMessagesAsRead(room._id);
   };
 
   // Mark messages as read
-  const markMessagesAsRead = async (roomId: string) => {
+  const markMessagesAsRead = async (roomId: string): Promise<void> => {
     try {
       await fetch("/api/chat/messages/read", {
         method: "POST",
@@ -120,7 +170,7 @@ const [messages, setMessages] = useState<Message[]>([]);
           userType: "technician",
         }),
       });
-      
+
       // Refresh notifications
       await fetchNotifications();
     } catch (error) {
@@ -129,7 +179,7 @@ const [messages, setMessages] = useState<Message[]>([]);
   };
 
   // Send message
-  const handleSendMessage = async () => {
+  const handleSendMessage = async (): Promise<void> => {
     if (!newMessage.trim() || !selectedRoom || sending) return;
 
     setSending(true);
@@ -159,15 +209,15 @@ const [messages, setMessages] = useState<Message[]>([]);
   };
 
   // Handle Enter key
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
+  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
+    if ((e as any).key === "Enter" && !(e as any).shiftKey) {
       e.preventDefault();
       handleSendMessage();
     }
   };
 
   // Close chat room
-  const handleCloseRoom = async (roomId) => {
+  const handleCloseRoom = async (roomId: string): Promise<void> => {
     if (!confirm("Are you sure you want to close this chat?")) return;
 
     try {
@@ -191,7 +241,7 @@ const [messages, setMessages] = useState<Message[]>([]);
   };
 
   // Format timestamp
-  const formatTime = (date) => {
+  const formatTime = (date: string) => {
     return new Date(date).toLocaleTimeString("en-US", {
       hour: "2-digit",
       minute: "2-digit",
@@ -199,7 +249,8 @@ const [messages, setMessages] = useState<Message[]>([]);
   };
 
   // Format date
-  const formatDate = (date) => {
+  const formatDate = (date?: string) => {
+    if (!date) return "";
     return new Date(date).toLocaleDateString("en-US", {
       month: "short",
       day: "numeric",
@@ -275,6 +326,7 @@ const [messages, setMessages] = useState<Message[]>([]);
                       <div className="flex items-center gap-2">
                         <h3 className="text-sm font-semibold text-gray-800 truncate">
                           {room.customerName}
+                          {totalUnread > 0 && " 🟢"}
                         </h3>
                         {unreadCount > 0 && (
                           <span className="bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
@@ -283,10 +335,20 @@ const [messages, setMessages] = useState<Message[]>([]);
                         )}
                       </div>
                       <p className="text-xs text-gray-500 truncate mt-1">
-                        {room.lastMessage || "No messages yet"}
+                        {room.lastMessageAt
+                          ? new Date(room.lastMessageAt).toLocaleTimeString(
+                              [],
+                              {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                              }
+                            )
+                          : " "}
                       </p>
                       <p className="text-xs text-gray-400 mt-1">
-                        {formatDate(room.lastMessageAt)}
+                        {room.lastMessageAt
+                          ? formatDate(room.lastMessageAt)
+                          : ""}
                       </p>
                     </div>
                     {/* <button
@@ -346,7 +408,9 @@ const [messages, setMessages] = useState<Message[]>([]);
                     <h2 className="text-lg font-semibold text-gray-800">
                       {selectedRoom.customerName}
                     </h2>
-                    <p className="text-xs text-gray-500">Customer ID: {selectedRoom.customerId}</p>
+                    <p className="text-xs text-gray-500">
+                      Customer Email: {selectedRoom.customerId}
+                    </p>
                   </div>
                 </div>
                 {/* <button
@@ -371,7 +435,9 @@ const [messages, setMessages] = useState<Message[]>([]);
                     return (
                       <div
                         key={msg._id}
-                        className={`flex ${isTechnician ? "justify-end" : "justify-start"}`}
+                        className={`flex ${
+                          isTechnician ? "justify-end" : "justify-start"
+                        }`}
                       >
                         <div
                           className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
