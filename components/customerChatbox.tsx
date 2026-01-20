@@ -66,6 +66,11 @@ export default function CustomerChat() {
         body: JSON.stringify({ customerName: "Customer" }),
       });
 
+      if (!response.ok) {
+        console.error("Failed to initialize chat:", response.status, response.statusText);
+        return;
+      }
+
       const data = await response.json();
       setChatRoom(data.chatRoom);
       await fetchMessages(data.chatRoom._id);
@@ -94,6 +99,11 @@ export default function CustomerChat() {
       const response = await fetch(
         `/api/chat/messages?chatRoomId=${roomId}&limit=100`
       );
+
+      if (!response.ok) {
+        console.error("Failed to fetch messages:", response.status, response.statusText);
+        return;
+      }
 
       const data = await response.json();
       const newMessages: Message[] = data.messages || [];
@@ -159,7 +169,7 @@ export default function CustomerChat() {
 
   const markMessagesAsRead = async (roomId: string): Promise<void> => {
     try {
-      await fetch("/api/chat/messages/read", {
+      const response = await fetch("/api/chat/messages/read", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -167,6 +177,12 @@ export default function CustomerChat() {
           userType: "customer",
         }),
       });
+
+      if (!response.ok) {
+        console.error("Failed to mark messages as read:", response.status, response.statusText);
+        return;
+      }
+
       setUnreadCount(0);
     } catch (error) {
       console.error("Error marking messages as read:", error);
@@ -179,7 +195,7 @@ export default function CustomerChat() {
     setSending(true);
 
     try {
-      await fetch("/api/chat/messages", {
+      const response = await fetch("/api/chat/messages", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -189,6 +205,12 @@ export default function CustomerChat() {
           senderName: "Customer",
         }),
       });
+
+      if (!response.ok) {
+        console.error("Failed to send message:", response.status, response.statusText);
+        alert("Failed to send message. Please try again.");
+        return;
+      }
 
       setNewMessage("");
       await fetchMessages(chatRoom._id);

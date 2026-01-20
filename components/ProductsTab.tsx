@@ -95,13 +95,18 @@ export default function ProductsTab({ onUpdate }: ProductsTabProps) {
     }
   };
 
-  const handleProductInputChange = (e: {
-    target: { name: string; value: string; type: string; checked: boolean };
-  }) => {
-    const { name, value, type, checked } = e.target;
+  const handleProductInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const target = e.target;
+    const { name, value } = target;
+    const checked = (target as HTMLInputElement).checked;
     setProductFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]:
+        target instanceof HTMLInputElement && target.type === "checkbox"
+          ? checked
+          : value,
     }));
   };
 

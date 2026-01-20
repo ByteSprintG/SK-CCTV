@@ -25,6 +25,10 @@ export interface CreateBookingData {
   powerAvailability?: string;
   specialRequirements?: string;
   alternatePhone?: string;
+  technician?: string;
+  technicianPhone?: string;
+  estimatedCompletionDate?: Date;
+  notes?: string;
   totalPrice: string;
 }
 
@@ -171,7 +175,7 @@ export class CCTVBookingRepository {
    // Get bookings for technician
   static async getBookingsByTechnician(
     technicianName: string
-  ): Promise<CCTVPackage[]> {
+  ): Promise<CCTVBooking[]> {
     const repo = await this.getRepository();
     return repo.find({
       where: { technician: technicianName } as any,
@@ -180,7 +184,7 @@ export class CCTVBookingRepository {
   }
 
   // Get pending confirmations (bookings that need to be confirmed)
-  static async getPendingConfirmations(): Promise<CCTVPackage[]> {
+  static async getPendingConfirmations(): Promise<CCTVBooking[]> {
     const repo = await this.getRepository();
     return repo.find({
       where: { bookingStatus: BookingStatus.PENDING } as any,

@@ -27,6 +27,13 @@ export interface UpdateOrderData {
   estimatedDelivery?: Date;
   deliveredAt?: Date;
   notes?: string;
+  shippingAddress?: string;
+  shippingState?: string;
+  shippingCity?: string;
+  shippingZipCode?: string;
+  shippingCountry?: string;
+  phoneNumber?: string;
+  paymentMethod?: string;
 }
 
 export class OrderRepository {
